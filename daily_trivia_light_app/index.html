@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daily Trivia ❤️</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="brand">
+          💘 Daily Trivia
+          <span class="badge" id="badgeDate"></span>
+        </div>
+        <div class="meta">
+          🔥 Streak: <span id="streak">0</span>
+          <span id="themeChip" class="theme-chip">🎲 Random</span>
+        </div>
+      </header>
+
+      <section class="card">
+        <h1>Today’s Question</h1>
+        <div id="question" class="question">Loading…</div>
+        <div id="choices" class="choices"></div>
+        <div id="fact" class="fact"></div>
+        <div class="buttons">
+          <button id="share">Share result</button>
+          <button id="seeYesterday">See yesterday</button>
+          <button id="reset">Reset</button>
+        </div>
+      </section>
+
+      <footer>
+        Themes: 🐾 Animals • 🎮 Gaming • 🦸‍♂️ Marvel • 💍 LOTR • 🚗 Cars
+      </footer>
+    </div>
+
+    <!-- Main app logic -->
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,85 @@
+:root {
+  --bg: #0f1116;
+  --card: #141824;
+  --text: #e7eaf0;
+  --muted: #9aa3b2;
+  --accent: #60a5fa;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.wrap {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header,
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-weight: bold;
+}
+
+.badge {
+  background: var(--accent);
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #000;
+  margin-left: 8px;
+}
+
+.card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.question {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.choices {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.choice-btn {
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--muted);
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.choice-btn.correct {
+  border-color: green;
+}
+
+.choice-btn.wrong {
+  border-color: red;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.fact {
+  margin-top: 10px;
+  color: var(--muted);
+}
