@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Trivia</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="logo">🧠 Daily Trivia</div>
+      <div class="stats">
+        <span id="points">⭐ 0</span>
+        <span id="lives">❤️ 3</span>
+        <span id="streak">🔥 0</span>
+        <button id="open-collection" class="chip">🖼️ Collection</button>
+        <!-- in <header> near your other chips -->
+        <button id="open-stats" class="chip">📊 Stats</button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main>
+      <!-- HOME SCREEN -->
+      <section id="home-screen" class="active-screen">
+        <h1>Welcome!</h1>
+        <p>Answer questions, earn points, and collect rewards every day.</p>
+        <button id="start-game">Start Today's Quiz</button>
+      </section>
+
+      <!-- QUIZ SCREEN -->
+      <section id="quiz-screen" class="hidden">
+        <div class="progress">
+          <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+        </div>
+
+        <h2 id="question-category">🐾 Animals</h2>
+        <p id="question-text">Loading question...</p>
+        <div id="answer-options" class="options"></div>
+      </section>
+
+      <section id="stats-screen" class="hidden">
+        <h2>Today’s Results</h2>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-title">Score</div>
+            <div class="stat-value"><span id="result-correct">0</span>/5</div>
+            <div class="stat-sub" id="result-perfect"></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">XP earned</div>
+            <div class="stat-value" id="result-xp">0</div>
+            <div class="stat-sub" id="result-xp-breakdown"></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Streak</div>
+            <div class="stat-value" id="result-streak">0 🔥</div>
+            <div class="stat-sub">Daily streak</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Hearts left</div>
+            <div class="stat-value" id="result-hearts">3 ❤️</div>
+            <div class="stat-sub">Out of 3</div>
+          </div>
+        </div>
+
+        <div id="result-reward" class="reward-row hidden">
+          <img id="result-reward-img" alt="Sticker reward" />
+          <div>
+            <div class="stat-title">Reward</div>
+            <div class="stat-sub">Perfect 5/5 — sticker unlocked!</div>
+          </div>
+        </div>
+
+        <div class="stat-title" style="margin-top: 10px">Result grid</div>
+        <div id="result-grid" class="result-grid"></div>
+
+        <div class="row">
+          <button id="share-results" class="chip">📣 Share</button>
+          <button id="back-home" class="chip">🏠 Home</button>
+          <button id="open-collection-2" class="chip">🖼️ Collection</button>
+        </div>
+      </section>
+
+      <!-- REWARD MODAL -->
+      <div id="reward-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>🎉 You earned a reward!</h2>
+          <img id="reward-image" src="" alt="Reward" />
+          <p id="reward-name"></p>
+          <button id="close-reward">Continue</button>
+        </div>
+      </div>
+
+      <!-- GAME OVER MODAL -->
+      <div id="gameover-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>💔 Game Over</h2>
+          <p>You ran out of lives. Try again tomorrow!</p>
+          <button id="restart-game">Restart</button>
+        </div>
+      </div>
+
+      <div id="collection-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>🖼️ Sticker Collection</h2>
+          <p class="muted">Your unlocked stickers appear here.</p>
+          <div id="collection-grid" class="grid"></div>
+          <button id="close-collection">Close</button>
+        </div>
+      </div>
+
+      <div id="share-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>Share your result</h2>
+          <div class="row" style="flex-wrap: wrap">
+            <a id="share-x" class="chip" target="_blank" rel="noopener"
+              >𝕏 / Twitter</a
+            >
+            <a id="share-wa" class="chip" target="_blank" rel="noopener"
+              >WhatsApp</a
+            >
+            <a id="share-tg" class="chip" target="_blank" rel="noopener"
+              >Telegram</a
+            >
+            <a id="share-fb" class="chip" target="_blank" rel="noopener"
+              >Facebook</a
+            >
+            <a id="share-sms" class="chip">SMS / iMessage</a>
+            <button id="share-copy" class="chip">📋 Copy</button>
+          </div>
+          <button id="share-close">Close</button>
+        </div>
+      </div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
