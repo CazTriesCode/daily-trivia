@@ -117,7 +117,7 @@ const BANK = [
   },
   {
     category: "gaming",
-    q: "Skyrim: the first word of Unrelenting Force (Fus Ro Dah) is…",
+    q: "Skyrim: the first word of Unrelenting Force is…",
     a: "Fus",
     distractors: ["Ro", "Dah", "Yol"],
   },
