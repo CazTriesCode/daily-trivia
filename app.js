@@ -23,12 +23,7 @@ const TOTAL_SLOTS = 18; // bag capacity
 /* ---------- Question bank (10 / category) ---------- */
 const BANK = [
   /* Animals */
-  {
-    category: "animals",
-    q: "What is the fastest land animal?",
-    a: "Cheetah",
-    distractors: ["Pronghorn", "Lion", "Greyhound"],
-  },
+
   {
     category: "animals",
     q: "Which mammal is capable of true powered flight?",
@@ -41,29 +36,12 @@ const BANK = [
     a: "African elephant",
     distractors: ["Giraffe", "Blue whale", "Hippopotamus"],
   },
-  {
-    category: "animals",
-    q: "A group of crows is called a…",
-    a: "Murder",
-    distractors: ["Gaggle", "Parliament", "Pack"],
-  },
-  {
-    category: "animals",
-    q: "Which animal can regrow limbs most famously among vertebrates?",
-    a: "Axolotl",
-    distractors: ["Iguana", "Komodo dragon", "Tree frog"],
-  },
+
   {
     category: "animals",
     q: "Which bear species is generally the largest?",
     a: "Polar bear",
     distractors: ["Grizzly bear", "Panda", "Black bear"],
-  },
-  {
-    category: "animals",
-    q: "Which bird can fly backwards?",
-    a: "Hummingbird",
-    distractors: ["Swift", "Albatross", "Falcon"],
   },
   {
     category: "animals",
@@ -77,12 +55,7 @@ const BANK = [
     a: "Arctic tern",
     distractors: ["Humpback whale", "Monarch butterfly", "Caribou"],
   },
-  {
-    category: "animals",
-    q: "Which creature is famous for color-changing skin?",
-    a: "Chameleon",
-    distractors: ["Gecko", "Newt", "Skink"],
-  },
+
 
   /* Gaming */
   {
@@ -115,30 +88,15 @@ const BANK = [
     a: "2",
     distractors: ["1", "3", "4"],
   },
-  {
-    category: "gaming",
-    q: "Skyrim: the first word of Unrelenting Force is…",
-    a: "Fus",
-    distractors: ["Ro", "Dah", "Yol"],
-  },
+ 
   {
     category: "gaming",
     q: "Fortnite: which of these is NOT a weapon rarity color?",
     a: "Red",
     distractors: ["Gray", "Green", "Purple"],
   },
-  {
-    category: "gaming",
-    q: "League of Legends: base gold for a champion kill is…",
-    a: "300",
-    distractors: ["100", "150", "500"],
-  },
-  {
-    category: "gaming",
-    q: "Tetris: the long straight piece is the…",
-    a: "I-Tetrimino",
-    distractors: ["L-Tetrimino", "T-Tetrimino", "S-Tetrimino"],
-  },
+
+
   {
     category: "gaming",
     q: "Animal Crossing: who runs the main shop/business empire?",
@@ -177,12 +135,7 @@ const BANK = [
     a: "New York City",
     distractors: ["Chicago", "Los Angeles", "Boston"],
   },
-  {
-    category: "marvel",
-    q: "Tony Stark’s AI assistant before FRIDAY was…",
-    a: "J.A.R.V.I.S.",
-    distractors: ["E.D.I.T.H.", "U.L.T.R.O.N.", "KAREN"],
-  },
+
   {
     category: "marvel",
     q: "Who wields Mjolnir in Avengers: Endgame besides Thor?",
@@ -195,12 +148,7 @@ const BANK = [
     a: "Quicksilver",
     distractors: ["Hawkeye", "Vision", "Polaris"],
   },
-  {
-    category: "marvel",
-    q: "Captain America’s shield is made primarily of…",
-    a: "Vibranium",
-    distractors: ["Adamantium", "Titanium", "Steel"],
-  },
+
   {
     category: "marvel",
     q: "The leader of the Dora Milaje is…",
@@ -215,12 +163,7 @@ const BANK = [
     a: "Mellon",
     distractors: ["Mae govannen", "Elen sila", "Mithrandir"],
   },
-  {
-    category: "lotr",
-    q: "Who forged the Three Elven Rings?",
-    a: "Celebrimbor",
-    distractors: ["Sauron", "Fëanor", "Aulë"],
-  },
+
   {
     category: "lotr",
     q: "On the Bridge of Khazad-dûm, Gandalf faces a…",
@@ -347,18 +290,7 @@ const BANK = [
     a: "Albus Dumbledore",
     distractors: ["Severus Snape", "Minerva McGonagall", "Dolores Umbridge"],
   },
-  {
-    category: "hp",
-    q: "Hermione’s cat is named…",
-    a: "Crookshanks",
-    distractors: ["Mrs. Norris", "Scabbers", "Snowy"],
-  },
-  {
-    category: "hp",
-    q: "Viktor Krum plays which Quidditch position?",
-    a: "Seeker",
-    distractors: ["Chaser", "Keeper", "Beater"],
-  },
+ 
   {
     category: "hp",
     q: "The pub entrance to Diagon Alley is the…",
