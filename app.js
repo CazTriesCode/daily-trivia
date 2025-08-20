@@ -26,12 +26,6 @@ const BANK = [
 
   {
     category: "animals",
-    q: "Which mammal is capable of true powered flight?",
-    a: "Bat",
-    distractors: ["Flying squirrel", "Colugo", "Sugar glider"],
-  },
-  {
-    category: "animals",
     q: "Which animal has the longest gestation period?",
     a: "African elephant",
     distractors: ["Giraffe", "Blue whale", "Hippopotamus"],
@@ -43,18 +37,6 @@ const BANK = [
     a: "Polar bear",
     distractors: ["Grizzly bear", "Panda", "Black bear"],
   },
-  {
-    category: "animals",
-    q: "Which animal is known to sleep up to ~20 hours a day?",
-    a: "Koala",
-    distractors: ["Sloth", "Lion", "Panda"],
-  },
-  {
-    category: "animals",
-    q: "Which animal makes the longest migration each year?",
-    a: "Arctic tern",
-    distractors: ["Humpback whale", "Monarch butterfly", "Caribou"],
-  },
 
 
   /* Gaming */
@@ -64,12 +46,7 @@ const BANK = [
     a: "Obsidian",
     distractors: ["Basalt", "Granite", "Bedrock"],
   },
-  {
-    category: "gaming",
-    q: "Ocarina of Time: Link’s horse is named…",
-    a: "Epona",
-    distractors: ["Roach", "Agro", "Shadowmere"],
-  },
+
   {
     category: "gaming",
     q: "Mario Kart: which item grants brief invincibility?",
@@ -88,60 +65,10 @@ const BANK = [
     a: "2",
     distractors: ["1", "3", "4"],
   },
- 
-  {
-    category: "gaming",
-    q: "Fortnite: which of these is NOT a weapon rarity color?",
-    a: "Red",
-    distractors: ["Gray", "Green", "Purple"],
-  },
 
-
-  {
-    category: "gaming",
-    q: "Animal Crossing: who runs the main shop/business empire?",
-    a: "Tom Nook",
-    distractors: ["Blathers", "K.K. Slider", "Isabelle"],
-  },
 
   /* Marvel */
-  {
-    category: "marvel",
-    q: "Black Panther’s real name is…",
-    a: "T’Challa",
-    distractors: ["M’Baku", "T’Chaka", "Erik Killmonger"],
-  },
-  {
-    category: "marvel",
-    q: "Wolverine’s skeleton is bonded with…",
-    a: "Adamantium",
-    distractors: ["Vibranium", "Uru", "Carbonadium"],
-  },
-  {
-    category: "marvel",
-    q: "The Tesseract houses which Infinity Stone?",
-    a: "Space Stone",
-    distractors: ["Mind Stone", "Time Stone", "Reality Stone"],
-  },
-  {
-    category: "marvel",
-    q: "Peter Quill’s ship in Guardians of the Galaxy (Vol. 1) is the…",
-    a: "Milano",
-    distractors: ["Benatar", "Dark Aster", "Eclector"],
-  },
-  {
-    category: "marvel",
-    q: "Spider-Man primarily operates in…",
-    a: "New York City",
-    distractors: ["Chicago", "Los Angeles", "Boston"],
-  },
 
-  {
-    category: "marvel",
-    q: "Who wields Mjolnir in Avengers: Endgame besides Thor?",
-    a: "Captain America",
-    distractors: ["Iron Man", "Hulk", "Doctor Strange"],
-  },
   {
     category: "marvel",
     q: "Scarlet Witch’s twin brother is…",
@@ -157,30 +84,12 @@ const BANK = [
   },
 
   /* LOTR */
-  {
-    category: "lotr",
-    q: "At the Doors of Moria, the Elvish word for 'friend' is…",
-    a: "Mellon",
-    distractors: ["Mae govannen", "Elen sila", "Mithrandir"],
-  },
 
-  {
-    category: "lotr",
-    q: "On the Bridge of Khazad-dûm, Gandalf faces a…",
-    a: "Balrog",
-    distractors: ["Cave troll", "Watcher in the Water", "Fellbeast"],
-  },
   {
     category: "lotr",
     q: "Narsil is reforged into…",
     a: "Andúril",
     distractors: ["Glamdring", "Sting", "Orcrist"],
-  },
-  {
-    category: "lotr",
-    q: "Gollum’s original name is…",
-    a: "Sméagol",
-    distractors: ["Déagol", "Gríma", "Haleth"],
   },
   {
     category: "lotr",
@@ -200,12 +109,7 @@ const BANK = [
     a: "Phial of Galadriel",
     distractors: ["Elven cloak", "Elven rope", "Lembas bread"],
   },
-  {
-    category: "lotr",
-    q: "Who slays the Witch-king of Angmar?",
-    a: "Éowyn",
-    distractors: ["Aragorn", "Gandalf", "Faramir"],
-  },
+   
   {
     category: "lotr",
     q: "The giant spider in Cirith Ungol is…",
@@ -214,46 +118,21 @@ const BANK = [
   },
 
   /* Cars */
-  {
-    category: "cars",
-    q: "RPM stands for…",
-    a: "Revolutions per minute",
-    distractors: ["Rotations per meter", "Rate per mile", "Rounds per motor"],
-  },
-  {
-    category: "cars",
-    q: "Ferrari is from which country?",
-    a: "Italy",
-    distractors: ["Germany", "France", "Spain"],
-  },
+
   {
     category: "cars",
     q: "Toyota’s pioneering 1997 hybrid model is the…",
     a: "Prius",
     distractors: ["Insight", "Leaf", "Mirai"],
   },
-  {
-    category: "cars",
-    q: "AWD means…",
-    a: "All-wheel drive",
-    distractors: [
-      "Active wheel differential",
-      "All-weather drivetrain",
-      "Automatic wheel drive",
-    ],
-  },
+ 
   {
     category: "cars",
     q: "Which company makes the 911?",
     a: "Porsche",
     distractors: ["BMW", "Audi", "Mercedes-Benz"],
   },
-  {
-    category: "cars",
-    q: "The Nürburgring is located in…",
-    a: "Germany",
-    distractors: ["Italy", "Austria", "United Kingdom"],
-  },
+
   {
     category: "cars",
     q: "A turbocharger’s main purpose is to…",
@@ -270,12 +149,7 @@ const BANK = [
     a: "Engine functions",
     distractors: ["Exhaust system", "Electric seats", "Infotainment"],
   },
-  {
-    category: "cars",
-    q: "Which Tesla model is the compact sedan?",
-    a: "Model 3",
-    distractors: ["Model S", "Model X", "Model Y"],
-  },
+
   {
     category: "cars",
     q: "What safety feature became mandatory on U.S. cars in 1998?",
@@ -284,19 +158,14 @@ const BANK = [
   },
 
   /* Harry Potter */
-  {
-    category: "hp",
-    q: "Who is Headmaster in Chamber of Secrets?",
-    a: "Albus Dumbledore",
-    distractors: ["Severus Snape", "Minerva McGonagall", "Dolores Umbridge"],
-  },
- 
+
   {
     category: "hp",
     q: "The pub entrance to Diagon Alley is the…",
     a: "Leaky Cauldron",
     distractors: ["Three Broomsticks", "Hog’s Head", "Hanged Man"],
   },
+   
   {
     category: "hp",
     q: "Which potion compels truth?",
@@ -321,18 +190,10 @@ const BANK = [
     a: "Gryffindor",
     distractors: ["Ravenclaw", "Hufflepuff", "Slytherin"],
   },
-  {
-    category: "hp",
-    q: "Harry’s Patronus takes the form of a…",
-    a: "Stag",
-    distractors: ["Otter", "Phoenix", "Hare"],
-  },
-  {
-    category: "hp",
-    q: "Which object shows your heart’s deepest desire?",
-    a: "Mirror of Erised",
-    distractors: ["Pensieve", "Time-Turner", "Philosopher’s Stone"],
-  },
+   
+
+   
+
 ];
 
 /* ---------- DOM helpers ---------- */
