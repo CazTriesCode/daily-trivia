@@ -1,0 +1,652 @@
+/* =========================================================
+   Daily Trivia — clean, non-conflicting stylesheet
+   - Mobile header: centered title, chips underneath
+   - Collection card shown above Stats (all devices)
+   - Responsive cards, options, modals, stats & bag grid
+   ========================================================= */
+
+/* ---------- Theme ---------- */
+:root {
+  --bg: #0b1220;
+  --bg-2: #0d1424;
+  --panel: #111a2b;
+  --panel-2: #0f1829;
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #eaf0ff;
+  --muted: #9fb0d0;
+
+  --accent: #46a2ff;
+  --accent-2: #68d0ff;
+  --ok: #22c55e;
+  --bad: #ef4444;
+  --warn: #f59e0b;
+
+  --btn: #4da3ff;
+  --btn-2: #61b0ff;
+
+  --radius: 20px;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --container: 980px;
+}
+
+/* ---------- Base ---------- */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+html,
+body {
+  overflow-x: hidden;
+}
+body {
+  margin: 0;
+  color: var(--text);
+  background: radial-gradient(
+      1200px 800px at 15% -10%,
+      #17233b 0%,
+      transparent 70%
+    ),
+    radial-gradient(900px 600px at 110% -20%, #14243f 0%, transparent 60%),
+    var(--bg);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---------- Utilities ---------- */
+.hidden {
+  display: none !important;
+}
+.muted {
+  color: var(--muted);
+}
+.small {
+  font-size: 12px;
+}
+.row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ---------- Layout ---------- */
+main {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 18px;
+}
+.container {
+  display: grid;
+  gap: 16px;
+}
+.card {
+  background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+.hero.card h2 {
+  margin: 0 0 6px;
+}
+
+/* ---------- Header (sticky) ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 18, 32, 0.92),
+    rgba(11, 18, 32, 0.6)
+  );
+  backdrop-filter: saturate(1.1) blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+.logo {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hud {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Mobile header: centered title, chips underneath */
+@media (max-width: 600px) {
+  .topbar {
+    flex-direction: column;
+    gap: 8px;
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-bottom: 10px;
+  }
+  .logo {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+  }
+  .hud {
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+
+/* ---------- Chips & Buttons ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  color: #cfe0ff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  font-weight: 800;
+  cursor: pointer;
+}
+.btn-primary {
+  background: var(--btn);
+  color: #071022;
+  border: none;
+  box-shadow: 0 12px 28px rgba(77, 163, 255, 0.25);
+}
+.btn-primary:hover {
+  background: var(--btn-2);
+}
+button:focus-visible,
+.chip:focus-visible,
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(70, 162, 255, 0.45);
+}
+
+/* ---------- Home specifics ---------- */
+#today-results-card .stats-cards {
+  margin-top: 8px;
+}
+#countdown {
+  color: #61b0ff;
+  font-weight: 700;
+}
+
+/* Reorder: Collection card above Stats card (all devices) */
+#home-screen .container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#home-screen .container > *:has(#mini-collection) {
+  order: 1;
+}
+#home-screen .container > *:has(#cat-stats) {
+  order: 10;
+}
+
+/* ---------- Quiz ---------- */
+.quiz-layer {
+  position: static;
+  padding-top: 0;
+}
+.quiz-card {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Progress bar */
+.progress {
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 0.25s ease;
+}
+
+/* Question */
+.q-head .muted {
+  font-weight: 700;
+  opacity: 0.95;
+}
+.q-head h2 {
+  margin: 6px 0 14px;
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+/* Options */
+.options {
+  display: grid;
+  gap: 12px;
+}
+.options .option,
+.options button {
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  cursor: pointer;
+  transition: box-shadow 0.15s, transform 0.03s, border-color 0.15s,
+    background 0.15s;
+}
+.options .option:hover {
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
+}
+.options .option:active {
+  transform: translateY(1px);
+}
+.options .option.correct {
+  border-color: rgba(34, 197, 94, 0.7);
+  background: rgba(34, 197, 94, 0.12);
+}
+.options .option.wrong {
+  border-color: rgba(239, 68, 68, 0.7);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* ---------- Small Stats summary (today card) ---------- */
+.stats-cards {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+}
+.stat-card {
+  background: #101827;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  margin: 0;
+}
+.stat-card .title {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.stat-card .big {
+  font-size: 24px;
+  font-weight: 800;
+}
+.stat-card .muted {
+  font-size: 12px;
+}
+
+/* Result grid (Wordle-style) */
+.result-grid {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0 12px;
+}
+.result-grid .box {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #273046;
+  border: 1px solid var(--line);
+}
+.result-grid .ok {
+  background: var(--ok);
+  border-color: rgba(34, 197, 94, 0.7);
+}
+.result-grid .bad {
+  background: var(--bad);
+  border-color: rgba(239, 68, 68, 0.7);
+}
+
+/* ---------- Lifetime Stats (grid) ---------- */
+#cat-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.stat-card.stat {
+  background: #101827;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.06s ease, box-shadow 0.15s ease;
+}
+.stat-card.stat:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+.stat-card.stat .top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.stat-card.stat .title {
+  color: var(--muted);
+  font-size: 12px;
+}
+.stat-card.stat .acc {
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: 0.2px;
+}
+.stat-card.stat .bar {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.stat-card.stat .fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+.stat-card.stat .fill.ok {
+  background: linear-gradient(90deg, #22c55e, #34d399);
+}
+.stat-card.stat .fill.warn {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+.stat-card.stat .fill.bad {
+  background: linear-gradient(90deg, #ef4444, #f87171);
+}
+.stat-card.stat .meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---------- Modals ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 18px;
+  z-index: 2000;
+}
+.modal.hidden {
+  display: none !important;
+}
+.modal-content {
+  width: 100%;
+  max-width: 720px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  animation: pop 0.14s ease-out;
+}
+@keyframes pop {
+  from {
+    transform: scale(0.98);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.modal-content.reward img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #0f131e;
+}
+
+/* ---------- Collection (bag) ---------- */
+.bag-grid {
+  --cols: 4;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+.bag-slot {
+  aspect-ratio: 1/1;
+  border-radius: 12px;
+  background: #0e1523;
+  border: 1px dashed #2a3856;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.bag-slot.locked {
+  opacity: 0.5;
+  filter: saturate(0.2);
+}
+.bag-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  background: #121727;
+  color: #e7eaf0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  z-index: 2500;
+}
+
+/* ---------- Misc ---------- */
+button[disabled] {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+#buy-life {
+  background: rgba(255, 0, 0, 0.08);
+}
+#buy-life:hover {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 430px) {
+  main {
+    padding: 12px;
+  }
+  .card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+  .hero.card h2 {
+    font-size: 24px;
+  }
+  .q-head h2 {
+    font-size: 22px;
+  }
+  .chip {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+  .btn {
+    padding: 10px 14px;
+  }
+  .progress {
+    height: 8px;
+  }
+  .options .option {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+  .result-grid .box {
+    width: 22px;
+    height: 22px;
+  }
+  .stats-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  #cat-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .stat-card.stat {
+    padding: 12px;
+  }
+  .stat-card.stat .acc {
+    font-size: 22px;
+  }
+  .stat-card.stat .bar {
+    height: 8px;
+  }
+  .modal {
+    padding: 12px;
+  }
+  .modal-content {
+    max-width: 92vw;
+  }
+  .toast {
+    bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+}
+@media (min-width: 768px) {
+  main {
+    padding: 26px;
+  }
+  .quiz-card {
+    max-width: 960px;
+  }
+  .stats-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .bag-grid {
+    --cols: 6;
+  }
+}
+@media (min-width: 1024px) {
+  .q-head h2 {
+    font-size: 30px;
+  }
+  .options .option {
+    padding: 16px 18px;
+    font-size: 17px;
+  }
+}
+
+.bag-slot img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Smaller stickers in the collection grid */
+:root {
+  --sticker-scale: 72%;
+} /* tweak 60–80% to taste */
+
+.bag-slot img {
+  width: var(--sticker-scale);
+  height: var(--sticker-scale);
+  object-fit: contain;
+  padding: 0; /* remove inner padding */
+}
+
+/* If you want them a touch smaller on phones */
+@media (max-width: 430px) {
+  :root {
+    --sticker-scale: 65%;
+  }
+}
+
+/* --- Mini collection (home) — fix selector + force small thumbs --- */
+#mini-collection,
+.mini-collection {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#mini-collection .thumb,
+.mini-collection .thumb,
+#mini-collection img {
+  /* harden in case class is missing */
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  background: #0e1523;
+  border: 1px dashed #2a3856;
+  border-radius: 10px;
+  padding: 6px;
+  flex: 0 0 auto;
+}
+
+/* slightly smaller on narrow phones */
+@media (max-width: 430px) {
+  #mini-collection .thumb,
+  .mini-collection .thumb,
+  #mini-collection img {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+  }
+}
