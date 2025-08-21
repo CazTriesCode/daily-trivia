@@ -1,5 +1,6 @@
 /* =========================================================
    Daily Trivia — full app.js (safe + data-preserving)
+   (Fresh questions + non-repeating daily rotation)
    ========================================================= */
 
 /* ---------- Category setup ---------- */
@@ -14,186 +15,404 @@ const LABELS = {
 };
 
 /* ---------- Game constants ---------- */
-const PUBLIC_SALT = "dt-v1"; // deterministic daily pick
+const PUBLIC_SALT = "dt-v2"; // new seed to remix order
 const MAX_HEARTS = 5; // cap with purchases
 const BASE_DAILY_HEARTS = 3; // daily minimum top-up
 const STICKER_COUNT = 18; // sticker_1..sticker_18
 const TOTAL_SLOTS = 18; // bag capacity
 
-/* ---------- Question bank (10 / category) ---------- */
+/* Start of the new rotation cycle (UTC-based). Everyone sees the same pick. */
+const ROTATION_START = "2025-08-22";
+
+/* ---------- Question bank (10 / category, fresh) ---------- */
 const BANK = [
   /* Animals */
-
   {
     category: "animals",
-    q: "Which animal has the longest gestation period?",
-    a: "African elephant",
-    distractors: ["Giraffe", "Blue whale", "Hippopotamus"],
+    q: "Which mammal has the thickest fur?",
+    a: "Sea otter",
+    distractors: ["Polar bear", "Beaver", "Walrus"],
   },
-
   {
     category: "animals",
-    q: "Which bear species is generally the largest?",
-    a: "Polar bear",
-    distractors: ["Grizzly bear", "Panda", "Black bear"],
+    q: "What is a baby kangaroo called?",
+    a: "Joey",
+    distractors: ["Pup", "Cub", "Calf"],
   },
-
+  {
+    category: "animals",
+    q: "Which bird has the largest wingspan?",
+    a: "Wandering albatross",
+    distractors: ["Andean condor", "Whooper swan", "Marabou stork"],
+  },
+  {
+    category: "animals",
+    q: "Which reptile can run on water short distances?",
+    a: "Basilisk lizard",
+    distractors: ["Iguana", "Komodo dragon", "Monitor lizard"],
+  },
+  {
+    category: "animals",
+    q: "Which animal has a blue tongue by default?",
+    a: "Blue-tongued skink",
+    distractors: ["Chameleon", "Gecko", "Anole"],
+  },
+  {
+    category: "animals",
+    q: "The largest species of ray is the…",
+    a: "Giant oceanic manta ray",
+    distractors: ["Devil ray", "Eagle ray", "Stingray"],
+  },
+  {
+    category: "animals",
+    q: "What is the only continent without native bears?",
+    a: "Australia",
+    distractors: ["Africa", "Europe", "South America"],
+  },
+  {
+    category: "animals",
+    q: "Which animal can rotate its head up to 270°?",
+    a: "Owl",
+    distractors: ["Falcon", "Vulture", "Heron"],
+  },
+  {
+    category: "animals",
+    q: "Which fish is famous for migrating upstream to spawn?",
+    a: "Salmon",
+    distractors: ["Tuna", "Sardine", "Mackerel"],
+  },
+  {
+    category: "animals",
+    q: "What is the largest species of deer?",
+    a: "Moose",
+    distractors: ["Red deer", "Elk", "Reindeer"],
+  },
 
   /* Gaming */
   {
     category: "gaming",
-    q: "Minecraft: which block is required to build a Nether portal?",
-    a: "Obsidian",
-    distractors: ["Basalt", "Granite", "Bedrock"],
-  },
-
-  {
-    category: "gaming",
-    q: "Mario Kart: which item grants brief invincibility?",
-    a: "Super Star",
-    distractors: ["Golden Mushroom", "Bullet Bill", "Boo"],
+    q: "In The Legend of Zelda: Breath of the Wild, what restores stamina instantly in cooking?",
+    a: "Endura dishes",
+    distractors: ["Hearty dishes", "Spicy dishes", "Chilly dishes"],
   },
   {
     category: "gaming",
-    q: "Pokémon: which type is super effective against Fire?",
-    a: "Water",
-    distractors: ["Grass", "Electric", "Fighting"],
+    q: "In Dark Souls, what is used to strengthen Estus recovery?",
+    a: "Fire Keeper Soul",
+    distractors: ["Humanity", "Titanite Slab", "Prism Stone"],
   },
   {
     category: "gaming",
-    q: "Among Us (10-player default): how many Impostors?",
-    a: "2",
-    distractors: ["1", "3", "4"],
+    q: "In Apex Legends, what is Wraith’s tactical ability called?",
+    a: "Into the Void",
+    distractors: ["Phase Breach", "Dimensional Rift", "Blink"],
   },
-
+  {
+    category: "gaming",
+    q: "In Stardew Valley, who runs the general store?",
+    a: "Pierre",
+    distractors: ["Joja Manager Morris", "Gus", "Robin"],
+  },
+  {
+    category: "gaming",
+    q: "In Hollow Knight, geo is the game’s…",
+    a: "Currency",
+    distractors: ["Health", "Magic", "Crafting material"],
+  },
+  {
+    category: "gaming",
+    q: "In Pokémon, which item evolves Pikachu?",
+    a: "Thunder Stone",
+    distractors: ["Sun Stone", "Shiny Stone", "Dawn Stone"],
+  },
+  {
+    category: "gaming",
+    q: "In Rocket League, how many players per side in standard playlists?",
+    a: "3",
+    distractors: ["2", "4", "5"],
+  },
+  {
+    category: "gaming",
+    q: "In Fortnite, building uses which three materials?",
+    a: "Wood, stone, metal",
+    distractors: [
+      "Wood, brick, steel",
+      "Clay, brick, metal",
+      "Wood, concrete, steel",
+    ],
+  },
+  {
+    category: "gaming",
+    q: "In Portal 2, who is the personality core companion?",
+    a: "Wheatley",
+    distractors: ["Atlas", "P-body", "Nigel"],
+  },
+  {
+    category: "gaming",
+    q: "In Animal Crossing, what type of animal is Isabelle?",
+    a: "Shih Tzu dog",
+    distractors: ["Cat", "Rabbit", "Hedgehog"],
+  },
 
   /* Marvel */
-
   {
     category: "marvel",
-    q: "Scarlet Witch’s twin brother is…",
-    a: "Quicksilver",
-    distractors: ["Hawkeye", "Vision", "Polaris"],
+    q: "What is the name of Thor’s axe introduced in Infinity War?",
+    a: "Stormbreaker",
+    distractors: ["Jarnbjorn", "Thunderstrike", "Gungnir"],
   },
-
   {
     category: "marvel",
-    q: "The leader of the Dora Milaje is…",
-    a: "Okoye",
-    distractors: ["Nakia", "Shuri", "Queen Ramonda"],
+    q: "Which alien race does Ronan the Accuser belong to?",
+    a: "Kree",
+    distractors: ["Skrull", "Chitauri", "Xandarian"],
+  },
+  {
+    category: "marvel",
+    q: "What is the real name of the Black Widow?",
+    a: "Natasha Romanoff",
+    distractors: ["Yelena Belova", "Melina Vostokoff", "Sharon Carter"],
+  },
+  {
+    category: "marvel",
+    q: "Doctor Strange trained at…",
+    a: "Kamar-Taj",
+    distractors: ["Kun-Lun", "Attilan", "Wundagore"],
+  },
+  {
+    category: "marvel",
+    q: "Which Avenger can lift 100 tons due to gamma mutation?",
+    a: "Hulk",
+    distractors: ["Captain America", "Hawkeye", "War Machine"],
+  },
+  {
+    category: "marvel",
+    q: "The leader of the Eternals in the comics is often…",
+    a: "Zuras",
+    distractors: ["Ikaris", "Ajak", "Sersi"],
+  },
+  {
+    category: "marvel",
+    q: "What metal forms the claws of X‑23 in most continuities?",
+    a: "Adamantium",
+    distractors: ["Vibranium", "Carbonadium", "Uru"],
+  },
+  {
+    category: "marvel",
+    q: "Which character says, “I can do this all day”?",
+    a: "Captain America",
+    distractors: ["Spider‑Man", "Ant‑Man", "Star‑Lord"],
+  },
+  {
+    category: "marvel",
+    q: "Who is the ruler of Latveria?",
+    a: "Doctor Doom",
+    distractors: ["Namor", "Magneto", "Red Skull"],
+  },
+  {
+    category: "marvel",
+    q: "Which group is Rocket a member of?",
+    a: "Guardians of the Galaxy",
+    distractors: ["Avengers", "X‑Men", "Inhumans"],
   },
 
   /* LOTR */
-
   {
     category: "lotr",
-    q: "Narsil is reforged into…",
-    a: "Andúril",
-    distractors: ["Glamdring", "Sting", "Orcrist"],
+    q: "What is the Elvish name for Rivendell?",
+    a: "Imladris",
+    distractors: ["Lothlórien", "Eregion", "Doriath"],
   },
   {
     category: "lotr",
-    q: "Steward of Gondor during the War of the Ring?",
-    a: "Denethor II",
-    distractors: ["Boromir", "Faramir", "Théoden"],
+    q: "What creature guards the gate of Moria in the lake?",
+    a: "Watcher in the Water",
+    distractors: ["Cave troll", "Balrog", "Were-worm"],
   },
   {
     category: "lotr",
-    q: "Merry and Pippin meet Treebeard in…",
-    a: "Fangorn Forest",
-    distractors: ["Mirkwood", "Lothlórien", "The Old Forest"],
+    q: "Who is known as Strider in Bree?",
+    a: "Aragorn",
+    distractors: ["Boromir", "Faramir", "Halbarad"],
   },
   {
     category: "lotr",
-    q: "Galadriel gives Frodo the…",
-    a: "Phial of Galadriel",
-    distractors: ["Elven cloak", "Elven rope", "Lembas bread"],
+    q: "Which city is also called Minas Anor?",
+    a: "Minas Tirith",
+    distractors: ["Osgiliath", "Minas Morgul", "Dol Amroth"],
   },
-   
   {
     category: "lotr",
-    q: "The giant spider in Cirith Ungol is…",
-    a: "Shelob",
-    distractors: ["Ungoliant", "Aranea", "Shelga"],
+    q: "What food do the Elves give the Fellowship for the road?",
+    a: "Lembas",
+    distractors: ["Miruvor", "Cram", "Waybread"],
+  },
+  {
+    category: "lotr",
+    q: "Who is the Lady of Lothlórien?",
+    a: "Galadriel",
+    distractors: ["Arwen", "Éowyn", "Melian"],
+  },
+  {
+    category: "lotr",
+    q: "Which Ent carries Merry and Pippin?",
+    a: "Treebeard",
+    distractors: ["Quickbeam", "Beechbone", "Skinbark"],
+  },
+  {
+    category: "lotr",
+    q: "What is the Elvish word for Sun in Sindarin?",
+    a: "Anor",
+    distractors: ["Isil", "Calen", "Gwaith"],
+  },
+  {
+    category: "lotr",
+    q: "Who reforged Narsil into Andúril?",
+    a: "Elves of Rivendell",
+    distractors: ["Dwarves of Erebor", "Men of Gondor", "Elves of Lórien"],
+  },
+  {
+    category: "lotr",
+    q: "What is the Black Speech inscription on the One Ring about?",
+    a: "Dominion over the other Rings",
+    distractors: [
+      "A curse on Sauron",
+      "A map to Mordor",
+      "The lineage of Isildur",
+    ],
   },
 
   /* Cars */
-
   {
     category: "cars",
-    q: "Toyota’s pioneering 1997 hybrid model is the…",
-    a: "Prius",
-    distractors: ["Insight", "Leaf", "Mirai"],
-  },
- 
-  {
-    category: "cars",
-    q: "Which company makes the 911?",
-    a: "Porsche",
-    distractors: ["BMW", "Audi", "Mercedes-Benz"],
-  },
-
-  {
-    category: "cars",
-    q: "A turbocharger’s main purpose is to…",
-    a: "Force more air into the engine",
+    q: "What does SUV stand for?",
+    a: "Sport Utility Vehicle",
     distractors: [
-      "Reduce emissions only",
-      "Cool engine coolant",
-      "Increase tire pressure",
+      "Street Utility Vehicle",
+      "Sports Urban Vehicle",
+      "Special Utility Van",
     ],
   },
   {
     category: "cars",
-    q: "In a car, the ECU primarily controls…",
-    a: "Engine functions",
-    distractors: ["Exhaust system", "Electric seats", "Infotainment"],
+    q: "Which company produces the Civic Type R?",
+    a: "Honda",
+    distractors: ["Toyota", "Mazda", "Nissan"],
   },
-
   {
     category: "cars",
-    q: "What safety feature became mandatory on U.S. cars in 1998?",
-    a: "Front airbags",
-    distractors: ["ABS", "Backup cameras", "Traction control"],
+    q: "What component mixes fuel and air in older engines?",
+    a: "Carburetor",
+    distractors: ["Catalytic converter", "Radiator", "Differential"],
+  },
+  {
+    category: "cars",
+    q: "Which country is home to the Nürburgring Nordschleife?",
+    a: "Germany",
+    distractors: ["Italy", "UK", "France"],
+  },
+  {
+    category: "cars",
+    q: "What drivetrain sends power only to the rear wheels?",
+    a: "RWD",
+    distractors: ["FWD", "AWD", "4WD Auto"],
+  },
+  {
+    category: "cars",
+    q: "Which brand makes the Supra (A90/A91)?",
+    a: "Toyota",
+    distractors: ["Subaru", "Lexus", "Mitsubishi"],
+  },
+  {
+    category: "cars",
+    q: "Turbo lag refers to a delay in…",
+    a: "Boost response",
+    distractors: ["Steering response", "Brake pressure", "Fuel delivery"],
+  },
+  {
+    category: "cars",
+    q: "What is the typical voltage of a modern car battery?",
+    a: "12V",
+    distractors: ["6V", "24V", "48V"],
+  },
+  {
+    category: "cars",
+    q: "What does ECU stand for?",
+    a: "Engine Control Unit",
+    distractors: [
+      "Electronic Coolant Unit",
+      "Exhaust Control Unit",
+      "Engine Calibration Utility",
+    ],
+  },
+  {
+    category: "cars",
+    q: "Which safety tech helps prevent wheel lock during braking?",
+    a: "ABS",
+    distractors: ["EBD", "ESC", "TCS"],
   },
 
   /* Harry Potter */
-
   {
     category: "hp",
-    q: "The pub entrance to Diagon Alley is the…",
-    a: "Leaky Cauldron",
-    distractors: ["Three Broomsticks", "Hog’s Head", "Hanged Man"],
-  },
-   
-  {
-    category: "hp",
-    q: "Which potion compels truth?",
-    a: "Veritaserum",
-    distractors: ["Polyjuice Potion", "Felix Felicis", "Amortentia"],
+    q: "What position does Harry play in Quidditch?",
+    a: "Seeker",
+    distractors: ["Chaser", "Keeper", "Beater"],
   },
   {
     category: "hp",
-    q: "The Killing Curse is…",
-    a: "Avada Kedavra",
-    distractors: ["Crucio", "Expelliarmus", "Sectumsempra"],
+    q: "What is the name of the Weasley family home?",
+    a: "The Burrow",
+    distractors: ["Shell Cottage", "Ottery St Catchpole", "Grimmauld Place"],
   },
   {
     category: "hp",
-    q: "The Half-Blood Prince is…",
-    a: "Severus Snape",
-    distractors: ["Tom Riddle", "Draco Malfoy", "Sirius Black"],
+    q: "What creature pulls the Hogwarts carriages?",
+    a: "Thestrals",
+    distractors: ["Hippogriffs", "Centaurs", "Abraxans"],
   },
   {
     category: "hp",
-    q: "Nearly Headless Nick is the ghost of which house?",
-    a: "Gryffindor",
-    distractors: ["Ravenclaw", "Hufflepuff", "Slytherin"],
+    q: "What form does Hermione’s Patronus take?",
+    a: "Otter",
+    distractors: ["Cat", "Swan", "Hare"],
   },
-   
-
-   
-
+  {
+    category: "hp",
+    q: "What is the name of the map that shows people at Hogwarts?",
+    a: "Marauder’s Map",
+    distractors: ["Foe‑Glass", "Seer’s Map", "Hogwarts Atlas"],
+  },
+  {
+    category: "hp",
+    q: "What vault number held the Philosopher’s Stone at Gringotts?",
+    a: "713",
+    distractors: ["394", "687", "217"],
+  },
+  {
+    category: "hp",
+    q: "What is the spell to open locked doors?",
+    a: "Alohomora",
+    distractors: ["Colloportus", "Finite", "Depulso"],
+  },
+  {
+    category: "hp",
+    q: "What is the wizarding prison called?",
+    a: "Azkaban",
+    distractors: ["Nurmengard", "Ilvermorny", "Gringotts"],
+  },
+  {
+    category: "hp",
+    q: "Who is the Half‑Giant gamekeeper at Hogwarts?",
+    a: "Rubeus Hagrid",
+    distractors: ["Argus Filch", "Severus Snape", "Horace Slughorn"],
+  },
+  {
+    category: "hp",
+    q: "What is Draco Malfoy’s signature sport at Hogwarts?",
+    a: "Quidditch (Seeker)",
+    distractors: ["Gobstones", "Wizard Chess", "Exploding Snap"],
+  },
 ];
 
 /* ---------- DOM helpers ---------- */
@@ -259,7 +478,6 @@ const mXPBreak = $("#m-xp-break");
 const mStreak = $("#m-streak");
 const mHearts = $("#m-hearts");
 const mGrid = $("#m-grid");
-const modalShareBtn = $("#modal-share");
 
 /* ---------- Storage (with migration) ---------- */
 const PROFILE_KEY = "dt_profile_v6";
@@ -357,6 +575,25 @@ const msUntilTomorrowUTC = () => {
 const DEV =
   location.hostname === "localhost" || /[?&](dev|test)=1/.test(location.search);
 
+/* ---------- Non-repeating daily rotation (UTC, global) ---------- */
+function daysSince(startYMD = ROTATION_START) {
+  const now = new Date();
+  const todayUTC = Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate()
+  );
+  const [y, m, d] = startYMD.split("-").map(Number);
+  const startUTC = Date.UTC(y, m - 1, d);
+  return Math.max(0, Math.floor((todayUTC - startUTC) / 86400000));
+}
+function nonRepeatingIndex(cat, poolLen) {
+  if (poolLen <= 0) return 0;
+  const startOffset = hashStr(`${PUBLIC_SALT}|${cat}`) % poolLen; // stable per category
+  const day = daysSince(); // advances each day
+  return (startOffset + day) % poolLen; // full cycle before repeat
+}
+
 /* ---------- Profile / daily init ---------- */
 let profile = loadProfile();
 let daily = loadDaily();
@@ -386,12 +623,11 @@ function newSession() {
 }
 
 function buildDailyQuestions() {
-  const dayKey = todayUTCKey();
   return CATS.map((cat) => {
     const pool = BANK.filter((q) => q.category === cat);
     if (!pool.length) return null;
-    const offset = hashStr(`${PUBLIC_SALT}|${dayKey}|${cat}`) % pool.length;
-    return pool[offset];
+    const idx = nonRepeatingIndex(cat, pool.length);
+    return pool[idx];
   }).filter(Boolean);
 }
 
@@ -1093,6 +1329,7 @@ function toast(msg, ms = 900) {
 }
 
 /* ---------- Events ---------- */
+const modalShareBtn = $("#modal-share");
 startBtn?.addEventListener("click", startRun);
 backHomeBtn?.addEventListener("click", () => switchScreen("home"));
 shareResultsBtn?.addEventListener("click", handleShare);
