@@ -1,0 +1,157 @@
+[
+  {
+    "q": "Who was the first President of the United States?",
+    "options": [
+      "George Washington",
+      "Thomas Jefferson",
+      "John Adams",
+      "Abraham Lincoln"
+    ],
+    "answer": "George Washington"
+  },
+  {
+    "q": "In what year did World War II end?",
+    "options": ["1945", "1939", "1944", "1950"],
+    "answer": "1945"
+  },
+  {
+    "q": "Who was known as the 'Maid of Orléans' and fought in the Hundred Years' War?",
+    "options": [
+      "Joan of Arc",
+      "Catherine the Great",
+      "Marie Antoinette",
+      "Elizabeth I"
+    ],
+    "answer": "Joan of Arc"
+  },
+  {
+    "q": "Which empire built the Colosseum in Rome?",
+    "options": [
+      "Roman Empire",
+      "Byzantine Empire",
+      "Ottoman Empire",
+      "Greek Empire"
+    ],
+    "answer": "Roman Empire"
+  },
+  {
+    "q": "Who was the British Prime Minister during most of World War II?",
+    "options": [
+      "Winston Churchill",
+      "Neville Chamberlain",
+      "Clement Attlee",
+      "Margaret Thatcher"
+    ],
+    "answer": "Winston Churchill"
+  },
+  {
+    "q": "The Great Fire of London occurred in which year?",
+    "options": ["1666", "1605", "1701", "1588"],
+    "answer": "1666"
+  },
+  {
+    "q": "Who was the first man to step on the Moon?",
+    "options": [
+      "Neil Armstrong",
+      "Buzz Aldrin",
+      "Yuri Gagarin",
+      "Michael Collins"
+    ],
+    "answer": "Neil Armstrong"
+  },
+  {
+    "q": "Which wall divided Berlin from 1961 to 1989?",
+    "options": ["Berlin Wall", "Iron Curtain", "Great Wall", "Wall of Europe"],
+    "answer": "Berlin Wall"
+  },
+  {
+    "q": "Which U.S. President issued the Emancipation Proclamation?",
+    "options": [
+      "Abraham Lincoln",
+      "George Washington",
+      "Ulysses S. Grant",
+      "Andrew Johnson"
+    ],
+    "answer": "Abraham Lincoln"
+  },
+  {
+    "q": "What year did the Titanic sink?",
+    "options": ["1912", "1905", "1918", "1920"],
+    "answer": "1912"
+  },
+  {
+    "q": "Who was the first Emperor of China?",
+    "options": ["Qin Shi Huang", "Sun Tzu", "Kublai Khan", "Confucius"],
+    "answer": "Qin Shi Huang"
+  },
+  {
+    "q": "Who was assassinated on the Ides of March in 44 BC?",
+    "options": [
+      "Julius Caesar",
+      "Alexander the Great",
+      "Marcus Aurelius",
+      "Hannibal"
+    ],
+    "answer": "Julius Caesar"
+  },
+  {
+    "q": "Which ancient civilization built Machu Picchu?",
+    "options": ["Inca", "Maya", "Aztec", "Olmec"],
+    "answer": "Inca"
+  },
+  {
+    "q": "Who discovered America in 1492?",
+    "options": [
+      "Christopher Columbus",
+      "Leif Erikson",
+      "Amerigo Vespucci",
+      "Ferdinand Magellan"
+    ],
+    "answer": "Christopher Columbus"
+  },
+  {
+    "q": "What was the name of the ship that carried the Pilgrims to America in 1620?",
+    "options": ["Mayflower", "Santa Maria", "Endeavour", "Discovery"],
+    "answer": "Mayflower"
+  },
+  {
+    "q": "Which empire was ruled by Genghis Khan?",
+    "options": [
+      "Mongol Empire",
+      "Ottoman Empire",
+      "Roman Empire",
+      "Persian Empire"
+    ],
+    "answer": "Mongol Empire"
+  },
+  {
+    "q": "In what year did the Berlin Wall fall?",
+    "options": ["1989", "1991", "1985", "1995"],
+    "answer": "1989"
+  },
+  {
+    "q": "Who was the first female Prime Minister of the United Kingdom?",
+    "options": [
+      "Margaret Thatcher",
+      "Theresa May",
+      "Indira Gandhi",
+      "Angela Merkel"
+    ],
+    "answer": "Margaret Thatcher"
+  },
+  {
+    "q": "Which pharaoh’s tomb was discovered in 1922 by Howard Carter?",
+    "options": ["Tutankhamun", "Ramses II", "Cleopatra", "Akhenaten"],
+    "answer": "Tutankhamun"
+  },
+  {
+    "q": "What event began on July 28, 1914?",
+    "options": [
+      "World War I",
+      "World War II",
+      "The Cold War",
+      "The American Civil War"
+    ],
+    "answer": "World War I"
+  }
+]

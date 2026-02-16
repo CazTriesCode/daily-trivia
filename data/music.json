@@ -1,0 +1,147 @@
+[
+  {
+    "q": "Which band released the album ‘Abbey Road’ in 1969?",
+    "options": ["The Beatles", "The Rolling Stones", "Pink Floyd", "The Who"],
+    "answer": "The Beatles"
+  },
+  {
+    "q": "What classical composer lost his hearing but continued to compose symphonies?",
+    "options": [
+      "Ludwig van Beethoven",
+      "Wolfgang Amadeus Mozart",
+      "Johann Sebastian Bach",
+      "Franz Schubert"
+    ],
+    "answer": "Ludwig van Beethoven"
+  },
+  {
+    "q": "Who is known as the 'Queen of Pop' and released the album 'Like a Virgin'?",
+    "options": ["Madonna", "Cyndi Lauper", "Whitney Houston", "Janet Jackson"],
+    "answer": "Madonna"
+  },
+  {
+    "q": "Which singer performed the 1984 hit song ‘Purple Rain’?",
+    "options": ["Prince", "Michael Jackson", "Stevie Wonder", "David Bowie"],
+    "answer": "Prince"
+  },
+  {
+    "q": "What is the name of Beyoncé’s all-female band that toured with her during her 2016 ‘Formation’ tour?",
+    "options": [
+      "Suga Mama",
+      "Destiny's Angels",
+      "Queen Band",
+      "Flawless Ladies"
+    ],
+    "answer": "Suga Mama"
+  },
+  {
+    "q": "Which artist had a hit with the 2016 song ‘Hello’?",
+    "options": ["Adele", "Sia", "Florence Welch", "Lorde"],
+    "answer": "Adele"
+  },
+  {
+    "q": "Which jazz legend was known as 'Satchmo'?",
+    "options": [
+      "Louis Armstrong",
+      "Duke Ellington",
+      "Miles Davis",
+      "Charlie Parker"
+    ],
+    "answer": "Louis Armstrong"
+  },
+  {
+    "q": "Which rock band performed ‘Bohemian Rhapsody’?",
+    "options": ["Queen", "Pink Floyd", "Led Zeppelin", "The Who"],
+    "answer": "Queen"
+  },
+  {
+    "q": "Who recorded the 2014 song ‘Happy’ that became a worldwide hit?",
+    "options": [
+      "Pharrell Williams",
+      "Bruno Mars",
+      "Justin Timberlake",
+      "Kelly Clarkson"
+    ],
+    "answer": "Pharrell Williams"
+  },
+  {
+    "q": "Which rapper released the album ‘To Pimp a Butterfly’ in 2015?",
+    "options": ["Kendrick Lamar", "J. Cole", "Kanye West", "Drake"],
+    "answer": "Kendrick Lamar"
+  },
+  {
+    "q": "What Irish rock band fronted by Bono performed ‘With or Without You’?",
+    "options": ["U2", "The Cranberries", "Thin Lizzy", "Snow Patrol"],
+    "answer": "U2"
+  },
+  {
+    "q": "Who composed the classical piece 'The Four Seasons'?",
+    "options": [
+      "Antonio Vivaldi",
+      "Johann Pachelbel",
+      "George Frideric Handel",
+      "Franz Liszt"
+    ],
+    "answer": "Antonio Vivaldi"
+  },
+  {
+    "q": "Which singer sang the 2013 hit ‘Roar’?",
+    "options": ["Katy Perry", "Taylor Swift", "Rihanna", "Ariana Grande"],
+    "answer": "Katy Perry"
+  },
+  {
+    "q": "What is the name of the classical piano piece composed by Ludwig van Beethoven often referred to as 'Moonlight Sonata'?",
+    "options": [
+      "Piano Sonata No. 14",
+      "Für Elise",
+      "Piano Sonata No. 8",
+      "Symphony No. 5"
+    ],
+    "answer": "Piano Sonata No. 14"
+  },
+  {
+    "q": "Which British singer released the album '25' in 2015?",
+    "options": ["Adele", "Ed Sheeran", "Ellie Goulding", "Sam Smith"],
+    "answer": "Adele"
+  },
+  {
+    "q": "What 1991 Nirvana song helped popularize grunge music?",
+    "options": [
+      "Smells Like Teen Spirit",
+      "Come As You Are",
+      "Lithium",
+      "In Bloom"
+    ],
+    "answer": "Smells Like Teen Spirit"
+  },
+  {
+    "q": "Which classical composer wrote ‘Eine kleine Nachtmusik’?",
+    "options": [
+      "Wolfgang Amadeus Mozart",
+      "Johann Sebastian Bach",
+      "Ludwig van Beethoven",
+      "Franz Schubert"
+    ],
+    "answer": "Wolfgang Amadeus Mozart"
+  },
+  {
+    "q": "Who released the 1985 rock anthem ‘We Are the World’ with USA for Africa?",
+    "options": ["USA for Africa", "Band Aid", "Live Aid", "Hear for Haiti"],
+    "answer": "USA for Africa"
+  },
+  {
+    "q": "Which pop star starred as a mermaid in the Disney movie ‘The Little Mermaid’ and sang ‘Part of Your World’?",
+    "options": [
+      "Jodi Benson",
+      "Christy Carlson Romano",
+      "Halle Bailey",
+      "Vanessa Williams"
+    ],
+    "answer": "Jodi Benson"
+  },
+  {
+    "q": "Which legendary guitarist was nicknamed 'Slowhand'?",
+    "options": ["Eric Clapton", "Jimmy Page", "Jimi Hendrix", "Carlos Santana"],
+    "answer": "Eric Clapton"
+  }
+]

@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>The Trivial Club</title>
+    <link rel="icon" href="assets/Logo/TTC LOGO.png" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Load Firebase early to prevent auth flash -->
+    <script type="module" src="firebase-init.js"></script>
+  </head>
+  <body>
+    <!-- Auth loading overlay - prevents any flash -->
+    <div
+      id="auth-overlay"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--bg, #0b1220);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div style="text-align: center">
+        <div
+          style="
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #46a2ff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+          "
+        ></div>
+        <p style="color: #9fb0d0; font-size: 14px">Loading...</p>
+      </div>
+    </div>
+
+    <style>
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- ===== Auth Screen (shown when not logged in) ===== -->
+    <section id="auth-screen" class="container hidden">
+      <div class="hero card" style="max-width: 480px; margin: 50px auto">
+        <h2>Welcome to The Trivial Club</h2>
+        <p class="muted">Sign in or create an account to start playing!</p>
+
+        <!-- Tab switcher -->
+        <div class="auth-tabs" style="display: flex; gap: 8px; margin: 20px 0">
+          <button id="tab-login" class="chip active" style="flex: 1">
+            Log In
+          </button>
+          <button id="tab-signup" class="chip" style="flex: 1">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form">
+          <label class="muted small" for="login-email">Email</label>
+          <input
+            id="login-email"
+            type="email"
+            class="input"
+            placeholder="your@email.com"
+            autocomplete="email"
+          />
+
+          <label
+            class="muted small"
+            for="login-password"
+            style="margin-top: 12px"
+            >Password</label
+          >
+          <input
+            id="login-password"
+            type="password"
+            class="input"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+          />
+
+          <div
+            id="login-error"
+            class="error-msg hidden"
+            style="margin-top: 8px; color: #ff6b6b"
+          ></div>
+
+          <div class="row" style="margin-top: 20px">
+            <button id="btn-login" class="btn btn-primary" style="flex: 1">
+              Log In
+            </button>
+          </div>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signup-form" class="hidden">
+          <label class="muted small" for="signup-email">Email</label>
+          <input
+            id="signup-email"
+            type="email"
+            class="input"
+            placeholder="your@email.com"
+            autocomplete="email"
+          />
+
+          <label
+            class="muted small"
+            for="signup-password"
+            style="margin-top: 12px"
+            >Password</label
+          >
+          <input
+            id="signup-password"
+            type="password"
+            class="input"
+            placeholder="At least 6 characters"
+            autocomplete="new-password"
+          />
+
+          <label
+            class="muted small"
+            for="signup-password-confirm"
+            style="margin-top: 12px"
+            >Confirm Password</label
+          >
+          <input
+            id="signup-password-confirm"
+            type="password"
+            class="input"
+            placeholder="Re-enter your password"
+            autocomplete="new-password"
+          />
+
+          <div
+            id="signup-error"
+            class="error-msg hidden"
+            style="margin-top: 8px; color: #ff6b6b"
+          ></div>
+
+          <div class="row" style="margin-top: 20px">
+            <button id="btn-signup" class="btn btn-primary" style="flex: 1">
+              Create Account
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Header / Top Bar ===== -->
+    <!-- Header is dynamically loaded by header-component.js -->
+    <div id="header-container"></div>
+
+    <!-- Guest Mode Banner -->
+    <div id="guest-banner" class="guest-banner hidden">
+      <p>
+        👤 Playing as guest -
+        <a href="#" id="guest-signup-link">Sign up</a> to save progress and
+        access leaderboards
+      </p>
+      <button id="close-guest-banner" aria-label="Close banner">✕</button>
+    </div>
+
+    <main>
+      <!-- ===== Home (dashboard) ===== -->
+      <section id="home-screen" class="container">
+        <!-- Resume banner (only shows if there’s a saved run) -->
+        <div
+          id="resume-banner"
+          class="card hidden"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+          "
+        >
+          <div class="muted small">You have an unfinished quiz. Continue?</div>
+          <div class="row" style="gap: 8px; margin: 0">
+            <button id="resume-continue" class="chip">▶ Continue</button>
+            <button id="resume-discard" class="chip">✖ Discard</button>
+          </div>
+        </div>
+
+        <div class="hero card" id="home-hero">
+          <h2>Welcome!</h2>
+          <p id="home-intro" class="muted">
+            Answer questions, earn points, and collect rewards every day.
+          </p>
+
+          <!-- Lock row (after you’ve played *all* categories) -->
+          <div id="lock-row" class="hidden">
+            <p class="muted">
+              You’ve played all categories today. New quizzes in
+              <span id="countdown">--:--:--</span> (Europe/London).
+            </p>
+          </div>
+
+          <h2>Select a Category</h2>
+          <ul id="category-list">
+            <li data-cat="entertainment">
+              🎬 Entertainment <small class="tag"></small>
+            </li>
+            <li data-cat="music">🎵 Music <small class="tag"></small></li>
+            <li data-cat="gaming">🎮 Gaming <small class="tag"></small></li>
+            <li data-cat="science">🔬 Science <small class="tag"></small></li>
+            <li data-cat="animals">🐾 Animals <small class="tag"></small></li>
+            <li data-cat="sports">⚽ Sports <small class="tag"></small></li>
+            <li data-cat="history">📜 History <small class="tag"></small></li>
+            <li data-cat="geography">
+              🌍 Geography <small class="tag"></small>
+            </li>
+          </ul>
+
+          <!-- Start row -->
+          <div id="start-row" class="row" style="margin-top: 12px">
+            <span class="muted small"
+              >Pick any category to play today’s 6 questions.</span
+            >
+          </div>
+        </div>
+
+        <!-- Today’s Results (optional container your JS can fill) -->
+        <div id="today-results-card" class="card hidden"></div>
+
+        <!-- Lifetime stats + mini collection -->
+        <div id="home-locked" class="card">
+          <h3>Your stats</h3>
+          <div id="cat-stats" class="stats-grid"></div>
+
+          <h3>Your collection</h3>
+          <div class="row">
+            <button id="open-collection-2" class="chip">
+              🖼️ Open collection
+            </button>
+          </div>
+          <div id="mini-collection" class="mini-collection"></div>
+        </div>
+      </section>
+
+      <!-- Resume banner (hidden by default) -->
+      <div
+        id="resume-banner"
+        class="card hidden"
+        style="
+          margin: 12px 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 10px;
+        "
+      >
+        <div class="muted small">You have an unfinished quiz. Resume?</div>
+        <div class="row" style="margin: 0">
+          <button id="resume-continue" class="chip">▶ Resume</button>
+          <button id="resume-discard" class="chip">✖ Discard</button>
+        </div>
+      </div>
+
+      <!-- ===== Quiz (full-screen card) ===== -->
+      <section id="quiz-screen" class="quiz-layer hidden" aria-live="polite">
+        <div class="quiz-card card">
+          <div class="q-head">
+            <div id="question-category" class="muted">Category</div>
+            <button id="exit-quiz" class="chip" aria-label="Exit quiz">
+              ↩ Exit
+            </button>
+          </div>
+
+          <div class="progress">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+
+          <h2 id="question-text">Loading…</h2>
+          <div id="answer-options" class="options"></div>
+        </div>
+      </section>
+
+      <!-- ===== Stats screen ===== -->
+      <section id="stats-screen" class="container hidden">
+        <h2>Today’s Results</h2>
+
+        <div
+          class="stats-cards"
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+          "
+        >
+          <div class="stat-card card">
+            <div class="title">Score</div>
+            <div class="big">
+              <span id="result-correct">0</span>/<span id="result-total"
+                >6</span
+              >
+            </div>
+            <div id="result-perfect" class="muted"></div>
+          </div>
+          <div class="stat-card card">
+            <div class="title">XP earned</div>
+            <div class="big" id="result-xp">0</div>
+            <div id="result-xp-breakdown" class="muted small"></div>
+          </div>
+          <div class="stat-card card">
+            <div class="title">Streak</div>
+            <div class="big" id="result-streak">0 🔥</div>
+            <div class="muted small">Daily streak</div>
+          </div>
+          <div class="stat-card card">
+            <div class="title">Hearts left</div>
+            <div class="big" id="result-hearts">3 ❤️</div>
+            <div class="muted small">Out of 3</div>
+          </div>
+        </div>
+
+        <div id="result-grid-label" class="muted">Result grid</div>
+        <div id="result-grid" class="result-grid"></div>
+
+        <div class="row" style="margin-top: 12px">
+          <button id="share-results" class="chip">📣 Share</button>
+          <button id="back-home" class="chip">🏠 Home</button>
+          <button id="open-collection-3" class="chip">🖼️ Collection</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===== Footer (auto-hidden in immersive mode) ===== -->
+    <footer class="bottombar">
+      <p><a href="mailto:carrawithero@gmail.com">carrawithero@gmail.com</a></p>
+      <button id="btn-feedback" class="chip">💬 Feedback</button>
+    </footer>
+
+    <!-- ===== Sticker collection modal ===== -->
+    <div
+      id="collection-modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="collection-title"
+    >
+      <div class="modal-content">
+        <div class="modal-head">
+          <h3 id="collection-title">🖼️ Sticker Collection</h3>
+          <button id="close-collection" class="chip" aria-label="Close">
+            ✖
+          </button>
+        </div>
+        <div id="collection-grid" class="bag-grid">
+          <!-- JS fills with .bag-slot items -->
+        </div>
+        <p class="muted small" style="margin-top: 8px">
+          Grey slots are locked. Get a perfect day to unlock a random sticker.
+        </p>
+      </div>
+    </div>
+
+    <!-- ===== Reward modal ===== -->
+    <div
+      id="reward-modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="reward-title"
+    >
+      <div class="modal-content reward">
+        <h3 id="reward-title">🎉 You earned a reward!</h3>
+        <img id="reward-image" alt="Sticker" />
+        <p id="reward-name" class="muted"></p>
+        <button id="close-reward" class="btn">Continue</button>
+      </div>
+    </div>
+
+    <!-- ===== Game over modal ===== -->
+    <div
+      id="gameover-modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="gameover-title"
+    >
+      <div class="modal-content">
+        <h3 id="gameover-title">💔 Game Over</h3>
+        <p class="muted">You ran out of lives. Try again tomorrow!</p>
+        <button id="restart-game" class="btn">Home</button>
+      </div>
+    </div>
+
+    <!-- ===== NYT-style Results modal ===== -->
+    <div
+      id="results-modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="results-title"
+    >
+      <div class="modal-content results">
+        <div class="modal-head">
+          <h3 id="results-title">🎯 Today’s Results</h3>
+          <button id="close-results" class="chip" aria-label="Close">✖</button>
+        </div>
+
+        <div
+          class="stats-cards"
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+          "
+        >
+          <div class="stat-card card">
+            <div class="title">Score</div>
+            <div class="big">
+              <span id="m-correct">0</span>/<span id="m-total">6</span>
+            </div>
+            <div id="m-perfect" class="muted small"></div>
+          </div>
+          <div class="stat-card card">
+            <div class="title">XP earned</div>
+            <div class="big" id="m-xp">0</div>
+            <div id="m-xp-break" class="muted small"></div>
+          </div>
+          <div class="stat-card card">
+            <div class="title">Streak</div>
+            <div class="big" id="m-streak">0 🔥</div>
+          </div>
+          <div class="stat-card card">
+            <div class="title">Hearts left</div>
+            <div class="big" id="m-hearts">3 ❤️</div>
+          </div>
+        </div>
+
+        <div class="muted">Result grid</div>
+        <div id="m-grid" class="result-grid"></div>
+
+        <div class="row" style="margin-top: 10px">
+          <button id="modal-share" class="chip">📣 Share</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Leaderboard modal ===== -->
+    <div
+      id="leaderboard-modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="leaderboard-title"
+    >
+      <div class="modal-content" style="max-width: 520px">
+        <div class="modal-head">
+          <h3 id="leaderboard-title">🏆 Leaderboard</h3>
+          <button id="close-leaderboard" class="chip" aria-label="Close">
+            ✖
+          </button>
+        </div>
+        <div id="lb-body" class="muted">Loading…</div>
+        <p class="muted small" style="margin-top: 8px">
+          Sorted by total XP. Play daily quizzes to climb!
+        </p>
+      </div>
+    </div>
+
+    <!-- ===== Scripts: Firebase first, then app.js ===== -->
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module">
+      // Initialize header with extra buttons for home page
+      import { setupHeader } from "./header-component.js";
+
+      // Wait for DOM to be ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initHeader);
+      } else {
+        initHeader();
+      }
+
+      function initHeader() {
+        // No extra buttons - Collection and Stats moved to Account page
+        setupHeader("home", "", "header-container");
+      }
+    </script>
+    <script defer src="app.js"></script>
+  </body>
+</html>

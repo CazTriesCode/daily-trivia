@@ -1,0 +1,112 @@
+[
+  {
+    "q": "What is the capital of Australia?",
+    "options": ["Canberra", "Sydney", "Melbourne", "Perth"],
+    "answer": "Canberra"
+  },
+  {
+    "q": "Which is the largest country in the world by land area?",
+    "options": ["Russia", "Canada", "China", "United States"],
+    "answer": "Russia"
+  },
+  {
+    "q": "Which river is the longest in the world?",
+    "options": ["Nile", "Amazon", "Yangtze", "Mississippi"],
+    "answer": "Nile"
+  },
+  {
+    "q": "What is the largest desert in the world?",
+    "options": ["Sahara", "Antarctic Desert", "Gobi", "Kalahari"],
+    "answer": "Antarctic Desert"
+  },
+  {
+    "q": "Which country has the most people?",
+    "options": ["India", "China", "United States", "Indonesia"],
+    "answer": "India"
+  },
+  {
+    "q": "Mount Everest lies on the border of Nepal and which other country?",
+    "options": ["China", "India", "Bhutan", "Pakistan"],
+    "answer": "China"
+  },
+  {
+    "q": "Which continent is known as the 'Dark Continent'?",
+    "options": ["Africa", "South America", "Asia", "Australia"],
+    "answer": "Africa"
+  },
+  {
+    "q": "What is the smallest country in the world?",
+    "options": ["Vatican City", "Monaco", "Nauru", "San Marino"],
+    "answer": "Vatican City"
+  },
+  {
+    "q": "Which U.S. state is the largest by area?",
+    "options": ["Alaska", "Texas", "California", "Montana"],
+    "answer": "Alaska"
+  },
+  {
+    "q": "What is the capital city of Canada?",
+    "options": ["Ottawa", "Toronto", "Vancouver", "Montreal"],
+    "answer": "Ottawa"
+  },
+  {
+    "q": "The Great Barrier Reef is located off the coast of which country?",
+    "options": ["Australia", "New Zealand", "Fiji", "Indonesia"],
+    "answer": "Australia"
+  },
+  {
+    "q": "Which desert covers much of northern Africa?",
+    "options": ["Sahara", "Kalahari", "Namib", "Thar"],
+    "answer": "Sahara"
+  },
+  {
+    "q": "What is the capital city of Japan?",
+    "options": ["Tokyo", "Kyoto", "Osaka", "Hiroshima"],
+    "answer": "Tokyo"
+  },
+  {
+    "q": "Which European country is divided into cantons?",
+    "options": ["Switzerland", "Germany", "Austria", "Belgium"],
+    "answer": "Switzerland"
+  },
+  {
+    "q": "Which African country was formerly known as Abyssinia?",
+    "options": ["Ethiopia", "Sudan", "Somalia", "Eritrea"],
+    "answer": "Ethiopia"
+  },
+  {
+    "q": "What is the largest ocean on Earth?",
+    "options": [
+      "Pacific Ocean",
+      "Atlantic Ocean",
+      "Indian Ocean",
+      "Arctic Ocean"
+    ],
+    "answer": "Pacific Ocean"
+  },
+  {
+    "q": "What is the capital city of Brazil?",
+    "options": ["Brasília", "Rio de Janeiro", "São Paulo", "Salvador"],
+    "answer": "Brasília"
+  },
+  {
+    "q": "Which mountain range separates Europe and Asia?",
+    "options": ["Ural Mountains", "Andes", "Himalayas", "Alps"],
+    "answer": "Ural Mountains"
+  },
+  {
+    "q": "Which U.S. city is known as the 'Windy City'?",
+    "options": ["Chicago", "New York", "Boston", "San Francisco"],
+    "answer": "Chicago"
+  },
+  {
+    "q": "What is the longest river in the United States?",
+    "options": [
+      "Missouri River",
+      "Mississippi River",
+      "Colorado River",
+      "Rio Grande"
+    ],
+    "answer": "Missouri River"
+  }
+]

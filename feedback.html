@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Feedback & Suggest a Question — Brains4Gains</title>
+    <link rel="icon" href="assets/favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      form.card {
+        display: grid;
+        gap: 12px;
+      }
+      .row {
+        display: grid;
+        gap: 8px;
+      }
+      label {
+        font-size: 14px;
+        color: #cfd3e6;
+      }
+      input[type="text"],
+      input[type="email"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #1f2233;
+        background: #141726;
+        color: #f0f2f9;
+      }
+      textarea {
+        min-height: 90px;
+      }
+      .pill {
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid #1f2233;
+        background: #141726;
+        cursor: pointer;
+      }
+      .help {
+        color: #98a0bd;
+        font-size: 12px;
+      }
+      .success,
+      .error {
+        padding: 10px 12px;
+        border-radius: 10px;
+      }
+      .success {
+        background: #0d2b1e;
+        color: #c6f6d5;
+        border: 1px solid #1a7f37;
+      }
+      .error {
+        background: #2b1d1d;
+        color: #fbd5d5;
+        border: 1px solid #b42318;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header is dynamically loaded -->
+    <div id="header-container"></div>
+
+    <main class="page">
+      <div class="card" style="margin-bottom: 12px">
+        <h2 style="margin: 0 0 4px">💬 Feedback & Suggest a Question</h2>
+        <p class="muted" style="margin: 0">
+          Send general feedback, or submit a trivia question with the correct
+          answer and 3 distractors. You can optionally leave your name for
+          credit if we use your question.
+        </p>
+      </div>
+
+      <div id="msg" class="hidden"></div>
+
+      <form id="fb-form" class="card">
+        <!-- Type selector -->
+        <div class="row">
+          <label>What would you like to send?</label>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap">
+            <label class="pill"
+              ><input type="radio" name="type" value="feedback" checked />
+              Feedback</label
+            >
+            <label class="pill"
+              ><input type="radio" name="type" value="question" /> Suggest a
+              Question</label
+            >
+          </div>
+        </div>
+
+        <!-- Category (question only) -->
+        <div class="row" id="row-category" style="display: none">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="">Select a category…</option>
+            <option value="entertainment">🎬 Entertainment</option>
+            <option value="music">🎵 Music</option>
+            <option value="gaming">🎮 Gaming</option>
+            <option value="science">🔬 Science</option>
+            <option value="animals">🐾 Animals</option>
+            <option value="sports">⚽ Sports</option>
+            <option value="history">📜 History</option>
+            <option value="geography">🌍 Geography</option>
+          </select>
+          <div class="help">All questions are vetted before going live.</div>
+        </div>
+
+        <!-- Feedback text -->
+        <div class="row" id="row-feedback">
+          <label for="feedback">Your feedback</label>
+          <textarea
+            id="feedback"
+            name="feedback"
+            placeholder="Tell us what you like, what’s confusing, or ideas to improve…"
+          ></textarea>
+        </div>
+
+        <!-- Question fields -->
+        <div id="question-fields" style="display: none">
+          <div class="row">
+            <label for="q">Question</label>
+            <textarea
+              id="q"
+              name="q"
+              placeholder="Write your question…"
+            ></textarea>
+          </div>
+          <div class="row">
+            <label for="answer">Correct answer</label>
+            <input
+              type="text"
+              id="answer"
+              name="answer"
+              placeholder="Correct answer"
+            />
+          </div>
+          <div class="row">
+            <label>Distractors (3)</label>
+            <input type="text" id="d1" name="d1" placeholder="Distractor 1" />
+            <input type="text" id="d2" name="d2" placeholder="Distractor 2" />
+            <input type="text" id="d3" name="d3" placeholder="Distractor 3" />
+          </div>
+        </div>
+
+        <!-- Optional credit & contact -->
+        <div class="row">
+          <label for="name">Your name (optional)</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Name for credit if used"
+          />
+        </div>
+        <div class="row">
+          <label for="email">Email (optional)</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="If we need to follow up"
+          />
+        </div>
+
+        <div class="row" style="margin-top: 8px">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button
+            type="button"
+            class="btn"
+            onclick="location.href = 'index.html'"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <script>
+      // Form mode toggle
+      const form = document.getElementById("fb-form");
+      const msg = document.getElementById("msg");
+      const rowCat = document.getElementById("row-category");
+      const rowFb = document.getElementById("row-feedback");
+      const qFields = document.getElementById("question-fields");
+
+      const OUTBOX_FEEDBACK = "MULTI_feedback_outbox_feedback";
+      const OUTBOX_QUESTIONS = "MULTI_feedback_outbox_questions";
+
+      // Two separate endpoints (replace with your own IDs)
+      const FORMSPREE_FEEDBACK = "https://formspree.io/f/your-feedback-id";
+      const FORMSPREE_QUESTIONS = "https://formspree.io/f/your-questions-id";
+
+      function syncFormMode() {
+        const type =
+          form.querySelector('input[name="type"]:checked')?.value || "feedback";
+        const isQ = type === "question";
+        rowCat.style.display = isQ ? "" : "none";
+        qFields.style.display = isQ ? "" : "none";
+        rowFb.style.display = isQ ? "none" : "";
+
+        document.getElementById("category").required = isQ;
+        document.getElementById("q").required = isQ;
+        document.getElementById("answer").required = isQ;
+        document.getElementById("d1").required = isQ;
+        document.getElementById("d2").required = isQ;
+        document.getElementById("d3").required = isQ;
+        document.getElementById("feedback").required = !isQ;
+      }
+      form
+        .querySelectorAll('input[name="type"]')
+        .forEach((r) => r.addEventListener("change", syncFormMode));
+      syncFormMode();
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const type =
+          form.querySelector('input[name="type"]:checked')?.value || "feedback";
+
+        const data = {
+          type,
+          category: (document.getElementById("category").value || "").trim(),
+          feedback: (document.getElementById("feedback").value || "").trim(),
+          q: (document.getElementById("q").value || "").trim(),
+          answer: (document.getElementById("answer").value || "").trim(),
+          d1: (document.getElementById("d1").value || "").trim(),
+          d2: (document.getElementById("d2").value || "").trim(),
+          d3: (document.getElementById("d3").value || "").trim(),
+          name: (document.getElementById("name").value || "").trim(),
+          email: (document.getElementById("email").value || "").trim(),
+          when: new Date().toISOString(),
+        };
+
+        // Validate
+        if (type === "feedback") {
+          if (!data.feedback) return showError("Please write some feedback.");
+        } else {
+          if (!data.category) return showError("Please select a category.");
+          if (!data.q || !data.answer || !data.d1 || !data.d2 || !data.d3)
+            return showError(
+              "Please fill the question, correct answer, and all 3 distractors.",
+            );
+        }
+
+        const endpoint =
+          type === "feedback" ? FORMSPREE_FEEDBACK : FORMSPREE_QUESTIONS;
+        const outbox = type === "feedback" ? OUTBOX_FEEDBACK : OUTBOX_QUESTIONS;
+
+        try {
+          // Comment out this block if you don't want to use Formspree yet:
+          const resp = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+          if (!resp.ok) throw new Error("Network response was not ok");
+          showSuccess("Thanks! Your submission was sent.");
+          form.reset();
+          syncFormMode();
+        } catch (err) {
+          // Local fallback “inbox”
+          const box = JSON.parse(localStorage.getItem(outbox) || "[]");
+          box.push(data);
+          localStorage.setItem(outbox, JSON.stringify(box));
+          showSuccess(
+            "Saved locally (offline inbox). We’ll process this later.",
+          );
+          form.reset();
+          syncFormMode();
+        }
+      });
+
+      function showSuccess(text) {
+        msg.className = "success";
+        msg.textContent = text;
+      }
+      function showError(text) {
+        msg.className = "error";
+        msg.textContent = text;
+      }
+    </script>
+
+    <!-- Load header component -->
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module">
+      import { setupHeader } from "./header-component.js";
+
+      // Wait for DOM to be ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => {
+          setupHeader("", "", "header-container");
+        });
+      } else {
+        setupHeader("", "", "header-container");
+      }
+    </script>
+  </body>
+</html>

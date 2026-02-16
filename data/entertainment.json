@@ -1,0 +1,172 @@
+[
+  {
+    "q": "Who directed the 1997 film 'Titanic'?",
+    "options": [
+      "James Cameron",
+      "Steven Spielberg",
+      "Ridley Scott",
+      "Peter Jackson"
+    ],
+    "answer": "James Cameron"
+  },
+  {
+    "q": "Which TV show features characters named Chandler, Ross, and Rachel?",
+    "options": ["Friends", "Seinfeld", "How I Met Your Mother", "The Office"],
+    "answer": "Friends"
+  },
+  {
+    "q": "In the Marvel Cinematic Universe, who plays Iron Man?",
+    "options": [
+      "Robert Downey Jr.",
+      "Chris Evans",
+      "Chris Hemsworth",
+      "Mark Ruffalo"
+    ],
+    "answer": "Robert Downey Jr."
+  },
+  {
+    "q": "What is the highest-grossing movie of all time (not adjusted for inflation, as of 2025)?",
+    "options": [
+      "Avatar",
+      "Avengers: Endgame",
+      "Titanic",
+      "Star Wars: The Force Awakens"
+    ],
+    "answer": "Avatar"
+  },
+  {
+    "q": "Which animated movie features the characters Woody and Buzz Lightyear?",
+    "options": ["Toy Story", "Shrek", "Finding Nemo", "Frozen"],
+    "answer": "Toy Story"
+  },
+  {
+    "q": "Who hosted the American late-night show 'The Tonight Show' from 2014 onwards?",
+    "options": [
+      "Jimmy Fallon",
+      "Jimmy Kimmel",
+      "Stephen Colbert",
+      "James Corden"
+    ],
+    "answer": "Jimmy Fallon"
+  },
+  {
+    "q": "Which TV series is set in the fictional land of Westeros?",
+    "options": [
+      "Game of Thrones",
+      "The Witcher",
+      "House of the Dragon",
+      "Lord of the Rings: The Rings of Power"
+    ],
+    "answer": "Game of Thrones"
+  },
+  {
+    "q": "Which movie features the line 'May the Force be with you'?",
+    "options": [
+      "Star Wars",
+      "Star Trek",
+      "The Matrix",
+      "Guardians of the Galaxy"
+    ],
+    "answer": "Star Wars"
+  },
+  {
+    "q": "Who played Jack Sparrow in 'Pirates of the Caribbean'?",
+    "options": [
+      "Johnny Depp",
+      "Orlando Bloom",
+      "Brad Pitt",
+      "Leonardo DiCaprio"
+    ],
+    "answer": "Johnny Depp"
+  },
+  {
+    "q": "Which Netflix series followed a group of kids encountering supernatural events in the town of Hawkins, Indiana?",
+    "options": [
+      "Stranger Things",
+      "Dark",
+      "The Umbrella Academy",
+      "Locke & Key"
+    ],
+    "answer": "Stranger Things"
+  },
+  {
+    "q": "In 'The Simpsons', what is the name of Bart's father?",
+    "options": [
+      "Homer Simpson",
+      "Ned Flanders",
+      "Moe Szyslak",
+      "Principal Skinner"
+    ],
+    "answer": "Homer Simpson"
+  },
+  {
+    "q": "Who played the character of Harry Potter in the movie series?",
+    "options": [
+      "Daniel Radcliffe",
+      "Rupert Grint",
+      "Elijah Wood",
+      "Tom Felton"
+    ],
+    "answer": "Daniel Radcliffe"
+  },
+  {
+    "q": "Which film won the Academy Award for Best Picture in 1994?",
+    "options": [
+      "Forrest Gump",
+      "Pulp Fiction",
+      "The Shawshank Redemption",
+      "Braveheart"
+    ],
+    "answer": "Forrest Gump"
+  },
+  {
+    "q": "What is the name of the fictional African country in 'Black Panther'?",
+    "options": ["Wakanda", "Zamunda", "Genovia", "Latveria"],
+    "answer": "Wakanda"
+  },
+  {
+    "q": "In the sitcom 'The Office' (U.S.), who is the regional manager of Dunder Mifflin Scranton?",
+    "options": [
+      "Michael Scott",
+      "Jim Halpert",
+      "Dwight Schrute",
+      "Andy Bernard"
+    ],
+    "answer": "Michael Scott"
+  },
+  {
+    "q": "Who directed the 'Lord of the Rings' trilogy?",
+    "options": [
+      "Peter Jackson",
+      "Christopher Nolan",
+      "George Lucas",
+      "Sam Raimi"
+    ],
+    "answer": "Peter Jackson"
+  },
+  {
+    "q": "Which film series features the character Neo?",
+    "options": ["The Matrix", "John Wick", "Blade Runner", "Inception"],
+    "answer": "The Matrix"
+  },
+  {
+    "q": "Which actress won the Academy Award for Best Actress for 'La La Land' (2016)?",
+    "options": [
+      "Emma Stone",
+      "Natalie Portman",
+      "Jennifer Lawrence",
+      "Meryl Streep"
+    ],
+    "answer": "Emma Stone"
+  },
+  {
+    "q": "Which streaming service released 'The Crown'?",
+    "options": ["Netflix", "HBO Max", "Disney+", "Amazon Prime Video"],
+    "answer": "Netflix"
+  },
+  {
+    "q": "Who voiced Elsa in Disney’s 'Frozen'?",
+    "options": ["Idina Menzel", "Kristen Bell", "Mandy Moore", "Demi Lovato"],
+    "answer": "Idina Menzel"
+  }
+]

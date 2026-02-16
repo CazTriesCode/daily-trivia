@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Trivial Club — Leaderboard</title>
+    <link rel="icon" href="assets/favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* small page-only tweaks */
+      .page {
+        max-width: 800px;
+        margin: 32px auto;
+        padding: 0 16px;
+      }
+      .lb-card {
+        padding: 16px;
+        border-radius: 12px;
+        background: var(--card, #111);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      }
+      .lb-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .lb-row:last-child {
+        border-bottom: 0;
+      }
+      .rank {
+        width: 36px;
+        text-align: right;
+        font-weight: 700;
+        opacity: 0.8;
+      }
+      .name {
+        flex: 1 1 auto;
+        font-weight: 600;
+      }
+      .xp {
+        font-variant-numeric: tabular-nums;
+      }
+      .muted {
+        opacity: 0.7;
+      }
+      .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .chip {
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 999px;
+        padding: 6px 12px;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+      }
+      .error {
+        padding: 12px;
+        border: 1px solid #f55;
+        border-radius: 10px;
+        background: #2a1313;
+      }
+
+      /* Leaderboard tabs */
+      .leaderboard-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .lb-tab {
+        flex: 1;
+        padding: 12px 20px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+
+      .lb-tab:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.25);
+      }
+
+      .lb-tab.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+      }
+
+      @media (max-width: 600px) {
+        .lb-tab {
+          padding: 10px 16px;
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header is dynamically loaded -->
+    <div id="header-container"></div>
+
+    <main class="page">
+      <!-- Leaderboard Tabs -->
+      <div class="leaderboard-tabs">
+        <button class="lb-tab active" data-tab="global">🌍 Global</button>
+        <button class="lb-tab" data-tab="friends">👥 Friends</button>
+      </div>
+
+      <div class="toolbar">
+        <div class="muted" id="lb-subtitle">Sorted by total XP</div>
+        <button id="refresh" class="chip">🔄 Refresh</button>
+      </div>
+
+      <div id="lb-card" class="lb-card">
+        <div id="lb-status" class="muted">Loading…</div>
+        <div id="lb-rows"></div>
+      </div>
+    </main>
+
+    <!-- Firebase must load BEFORE leaderboard.js -->
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module">
+      // Initialize header for leaderboard page
+      import { setupHeader } from "./header-component.js";
+
+      // Wait for DOM to be ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => {
+          setupHeader("leaderboard", "", "header-container");
+        });
+      } else {
+        setupHeader("leaderboard", "", "header-container");
+      }
+    </script>
+    <script type="module" src="leaderboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Review Submissions — Brains4Gains</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      .section {
+        background: #141726;
+        border: 1px solid #1f2233;
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1fr 1fr;
+      }
+      @media (max-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .submission {
+        background: #141726;
+        border: 1px solid #1f2233;
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 10px;
+      }
+      .submission h4 {
+        margin: 0 0 6px;
+      }
+      .submission pre {
+        background: #1f2233;
+        padding: 8px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 12px;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        background: #2a2e44;
+        color: #fff;
+        border: 1px solid #1f2233;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: #3a44ff;
+        border: 1px solid #2c37cc;
+      }
+      .btn-approve {
+        background: #1a7f37;
+        color: #fff;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .btn-reject {
+        background: #b42318;
+        color: #fff;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .muted {
+        color: #98a0bd;
+      }
+      #merge-log {
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header is dynamically loaded -->
+    <div id="header-container"></div>
+
+    <main class="page">
+      <h2>📥 Review Submissions</h2>
+      <div class="grid">
+        <!-- FEEDBACK COLUMN -->
+        <section class="section">
+          <h3 style="margin: 0 0 6px">Feedback Inbox</h3>
+          <p class="muted">
+            General app feedback. Export to CSV/JSON or mark items as resolved.
+          </p>
+          <div id="feedback-list"></div>
+          <div class="row">
+            <button id="btn-export-feedback-json" class="btn">
+              ⬇️ Export feedback (JSON)
+            </button>
+            <button id="btn-export-feedback-csv" class="btn">
+              ⬇️ Export feedback (CSV)
+            </button>
+            <button id="btn-clear-feedback" class="btn">
+              🧹 Clear all feedback
+            </button>
+          </div>
+        </section>
+
+        <!-- QUESTIONS COLUMN -->
+        <section class="section">
+          <h3 style="margin: 0 0 6px">Question Suggestions</h3>
+          <p class="muted">
+            Approve good questions. Approved ones can be merged into
+            /data/&lt;category&gt;.json.
+          </p>
+          <div id="questions-list"></div>
+
+          <h4>Approved</h4>
+          <div id="approved-list"></div>
+          <div class="row">
+            <button id="btn-export-approved" class="btn">
+              ⬇️ Export approved (JSON)
+            </button>
+            <button id="btn-clear-approved" class="btn">
+              🧹 Clear approved
+            </button>
+          </div>
+
+          <div class="section" style="margin-top: 12px">
+            <h4 style="margin: 0 0 6px">Merge into live category JSONs</h4>
+            <p class="muted">
+              Fetch current <code>/data/&lt;category&gt;.json</code>, append
+              approved, de‑dupe by question text, add a <code>credit</code> (and
+              <code>sourceEmail</code> if present), then download new files.
+            </p>
+            <div class="row">
+              <button id="btn-merge" class="btn btn-primary">
+                🔁 Export merged per‑category
+              </button>
+            </div>
+            <div id="merge-log" class="muted" style="margin-top: 8px"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      // Separate keys
+      const OUTBOX_FEEDBACK = "MULTI_feedback_outbox_feedback";
+      const OUTBOX_QUESTIONS = "MULTI_feedback_outbox_questions";
+      const APPROVED_QUESTIONS = "MULTI_feedback_approved";
+      const DATA_PATH = "data";
+
+      // Elements
+      const feedbackList = document.getElementById("feedback-list");
+      const questionsList = document.getElementById("questions-list");
+      const approvedList = document.getElementById("approved-list");
+      const btnExportFeedbackJSON = document.getElementById(
+        "btn-export-feedback-json",
+      );
+      const btnExportFeedbackCSV = document.getElementById(
+        "btn-export-feedback-csv",
+      );
+      const btnClearFeedback = document.getElementById("btn-clear-feedback");
+      const btnExportApproved = document.getElementById("btn-export-approved");
+      const btnClearApproved = document.getElementById("btn-clear-approved");
+      const btnMerge = document.getElementById("btn-merge");
+      const mergeLogEl = document.getElementById("merge-log");
+
+      // Storage helpers
+      const load = (k) => JSON.parse(localStorage.getItem(k) || "[]");
+      const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+      // ---------- Renderers ----------
+      function renderFeedback() {
+        const arr = load(OUTBOX_FEEDBACK);
+        feedbackList.innerHTML = "";
+        if (!arr.length) {
+          feedbackList.innerHTML = "<p class='muted'>No feedback.</p>";
+          return;
+        }
+        arr.forEach((s, i) => {
+          const div = document.createElement("div");
+          div.className = "submission";
+          div.innerHTML = `
+          <h4>💬 Feedback</h4>
+          <pre>${JSON.stringify(s, null, 2)}</pre>
+          <div class="row">
+            <button class="btn" data-i="${i}">✅ Mark resolved</button>
+          </div>
+        `;
+          div.querySelector("button").addEventListener("click", () => {
+            const box = load(OUTBOX_FEEDBACK);
+            box.splice(i, 1);
+            save(OUTBOX_FEEDBACK, box);
+            renderFeedback();
+          });
+          feedbackList.appendChild(div);
+        });
+      }
+
+      function renderQuestions() {
+        const arr = load(OUTBOX_QUESTIONS);
+        questionsList.innerHTML = "";
+        if (!arr.length) {
+          questionsList.innerHTML = "<p class='muted'>No suggestions.</p>";
+          return;
+        }
+        arr.forEach((s, i) => {
+          const div = document.createElement("div");
+          div.className = "submission";
+          div.innerHTML = `
+          <h4>❓ Question — ${s.category || "n/a"}</h4>
+          <pre>${JSON.stringify(s, null, 2)}</pre>
+          <div class="row">
+            <button class="btn-approve">✅ Approve</button>
+            <button class="btn-reject">❌ Reject</button>
+          </div>
+        `;
+          div.querySelector(".btn-approve").addEventListener("click", () => {
+            const box = load(OUTBOX_QUESTIONS);
+            const approved = load(APPROVED_QUESTIONS);
+            approved.push(box[i]);
+            box.splice(i, 1);
+            save(OUTBOX_QUESTIONS, box);
+            save(APPROVED_QUESTIONS, approved);
+            renderQuestions();
+            renderApproved();
+          });
+          div.querySelector(".btn-reject").addEventListener("click", () => {
+            const box = load(OUTBOX_QUESTIONS);
+            box.splice(i, 1);
+            save(OUTBOX_QUESTIONS, box);
+            renderQuestions();
+          });
+          questionsList.appendChild(div);
+        });
+      }
+
+      function renderApproved() {
+        const arr = load(APPROVED_QUESTIONS);
+        approvedList.innerHTML = "";
+        if (!arr.length) {
+          approvedList.innerHTML = "<p class='muted'>None approved yet.</p>";
+          return;
+        }
+        arr.forEach((s, i) => {
+          const div = document.createElement("div");
+          div.className = "submission";
+          div.innerHTML = `
+          <h4>✅ Approved — ${s.category || "n/a"}</h4>
+          <pre>${JSON.stringify(s, null, 2)}</pre>
+          <div class="row">
+            <button class="btn-reject">🗑 Remove</button>
+          </div>
+        `;
+          div.querySelector(".btn-reject").addEventListener("click", () => {
+            const a = load(APPROVED_QUESTIONS);
+            a.splice(i, 1);
+            save(APPROVED_QUESTIONS, a);
+            renderApproved();
+          });
+          approvedList.appendChild(div);
+        });
+      }
+
+      // ---------- Feedback: export & clear ----------
+      btnExportFeedbackJSON.addEventListener("click", () => {
+        const arr = load(OUTBOX_FEEDBACK);
+        if (!arr.length) {
+          alert("No feedback to export.");
+          return;
+        }
+        downloadJSON(arr, "feedback_inbox.json");
+      });
+
+      btnExportFeedbackCSV.addEventListener("click", () => {
+        const arr = load(OUTBOX_FEEDBACK);
+        if (!arr.length) {
+          alert("No feedback to export.");
+          return;
+        }
+        // columns: when, name, email, feedback
+        const csv = toCSV(arr, ["when", "name", "email", "feedback"]);
+        downloadText(csv, "feedback_inbox.csv", "text/csv");
+      });
+
+      btnClearFeedback.addEventListener("click", () => {
+        if (!confirm("Clear all feedback?")) return;
+        localStorage.removeItem(OUTBOX_FEEDBACK);
+        renderFeedback();
+      });
+
+      // ---------- Approved questions: export & clear ----------
+      btnExportApproved.addEventListener("click", () => {
+        const arr = load(APPROVED_QUESTIONS);
+        if (!arr.length) {
+          alert("No approved questions.");
+          return;
+        }
+        downloadJSON(arr, "approved_questions.json");
+      });
+
+      btnClearApproved.addEventListener("click", () => {
+        if (!confirm("Clear approved questions?")) return;
+        localStorage.removeItem(APPROVED_QUESTIONS);
+        renderApproved();
+      });
+
+      // ---------- Merge/export per-category (adds credit + sourceEmail) ----------
+      btnMerge.addEventListener("click", async () => {
+        mergeLogEl.textContent = "";
+        const approved = load(APPROVED_QUESTIONS).filter(
+          (x) => x.type === "question",
+        );
+        if (!approved.length) {
+          alert("No approved question suggestions.");
+          return;
+        }
+
+        // Group by category
+        const groups = {};
+        for (const s of approved) {
+          const cat = (s.category || "").trim();
+          if (!cat) continue;
+          (groups[cat] ||= []).push(s);
+        }
+        const cats = Object.keys(groups);
+        if (!cats.length) {
+          alert("No category set on approved items.");
+          return;
+        }
+
+        for (const cat of cats) {
+          log(`• ${cat}: merging ${groups[cat].length} approved…`);
+          try {
+            const live = await fetchJSON(`${DATA_PATH}/${cat}.json`);
+            const merged = mergeQuestionsWithCredit(live, groups[cat]);
+            const outName = `${cat}.json`;
+            downloadJSON(merged, outName);
+            log(
+              `  → Downloaded ${outName} (after de‑dupe: ${merged.length} total)`,
+            );
+          } catch (e) {
+            log(`  ! Failed to fetch/merge ${cat}: ${e.message}`);
+          }
+        }
+        log(
+          `\nDone. Upload the downloaded files to your /data folder on the server.`,
+        );
+      });
+
+      // ---------- Utilities ----------
+      function fetchJSON(url) {
+        return fetch(url, { cache: "no-store" }).then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        });
+      }
+      function asQuestionObjects(arr) {
+        return (Array.isArray(arr) ? arr : []).filter(
+          (x) =>
+            x &&
+            typeof x.q === "string" &&
+            Array.isArray(x.options) &&
+            typeof x.answer === "string",
+        );
+      }
+      function normalizeQ(s) {
+        return (s || "").trim().replace(/\s+/g, " ").toLowerCase();
+      }
+
+      // NEW: include credit + sourceEmail on merged questions
+      function mergeQuestionsWithCredit(liveArr, approvedArr) {
+        const live = asQuestionObjects(liveArr);
+        const map = new Map(live.map((q) => [normalizeQ(q.q), q]));
+
+        const toAdd = approvedArr
+          .filter(
+            (s) =>
+              s.type === "question" && s.q && s.answer && s.d1 && s.d2 && s.d3,
+          )
+          .map((s) => {
+            const obj = {
+              q: s.q.trim(),
+              options: [s.answer, s.d1, s.d2, s.d3],
+              answer: s.answer.trim(),
+            };
+            if (s.name) obj.credit = s.name.trim(); // attribution
+            if (s.email) obj.sourceEmail = s.email.trim(); // for your records
+            return obj;
+          });
+
+        for (const q of toAdd) {
+          const key = normalizeQ(q.q);
+          if (!map.has(key)) map.set(key, q);
+        }
+        return Array.from(map.values());
+      }
+
+      function toCSV(rows, cols) {
+        const escape = (v) => {
+          const s = (v ?? "").toString().replace(/"/g, '""');
+          return `"${s}"`;
+        };
+        const header = cols.map(escape).join(",");
+        const lines = rows.map((r) => cols.map((c) => escape(r[c])).join(","));
+        return [header, ...lines].join("\n");
+      }
+
+      function downloadJSON(obj, filename) {
+        downloadText(
+          JSON.stringify(obj, null, 2),
+          filename,
+          "application/json",
+        );
+      }
+      function downloadText(text, filename, mime) {
+        const blob = new Blob([text], { type: mime });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+      function log(t) {
+        mergeLogEl.textContent += t + "\n";
+      }
+
+      // Init
+      renderFeedback();
+      renderQuestions();
+      renderApproved();
+    </script>
+
+    <!-- Load header component -->
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module">
+      import { setupHeader } from "./header-component.js";
+
+      // Wait for DOM to be ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => {
+          setupHeader("", "", "header-container");
+        });
+      } else {
+        setupHeader("", "", "header-container");
+      }
+    </script>
+  </body>
+</html>

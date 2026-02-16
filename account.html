@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Account Settings - The Trivial Club</title>
+    <link rel="icon" href="assets/Logo/TTC LOGO.png" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .account-page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      /* Force padding on mobile - comprehensive fix */
+      @media (max-width: 768px) {
+        body {
+          padding: 0 !important;
+          margin: 0 !important;
+          overflow-x: hidden;
+        }
+
+        .account-page {
+          padding: 16px !important;
+          padding-right: 16px !important;
+          padding-left: 16px !important;
+          box-sizing: border-box;
+        }
+
+        .account-grid {
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+        }
+
+        .account-card {
+          padding: 16px !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+
+        .header-content {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+      }
+
+      .breadcrumb {
+        margin-bottom: 20px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .breadcrumb a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+      .account-grid {
+        display: grid;
+        gap: 20px;
+      }
+      @media (min-width: 768px) {
+        .account-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .account-grid .full-width {
+          grid-column: 1 / -1;
+        }
+      }
+      .account-card {
+        background: linear-gradient(
+          180deg,
+          var(--panel) 0%,
+          var(--panel-2) 100%
+        );
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+      .account-card h2 {
+        margin: 0 0 20px 0;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .info-row:last-child {
+        border-bottom: none;
+      }
+      .info-label {
+        font-weight: 600;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .info-value {
+        font-weight: 600;
+        text-align: right;
+      }
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-top: 12px;
+      }
+      .stat-item {
+        text-align: center;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        border: 1px solid var(--line);
+      }
+      .stat-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--accent);
+        display: block;
+        margin-bottom: 4px;
+      }
+      .stat-label {
+        font-size: 12px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .editable-field {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .editable-field input {
+        flex: 1;
+        padding: 8px 12px;
+        background: var(--panel-2);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: var(--text);
+        font-size: 14px;
+        font-family: inherit;
+      }
+      .editable-field input:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+      .btn-small {
+        padding: 8px 16px;
+        font-size: 13px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .btn-primary-small {
+        background: var(--btn);
+        color: white;
+      }
+      .btn-primary-small:hover {
+        background: var(--btn-2);
+        transform: translateY(-1px);
+      }
+      .btn-secondary {
+        background: transparent;
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+      .btn-danger {
+        background: var(--bad);
+        color: white;
+      }
+      .btn-danger:hover {
+        background: #dc2626;
+        transform: translateY(-1px);
+      }
+      .danger-zone {
+        border: 2px solid var(--bad);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-top: 12px;
+      }
+      .danger-zone h3 {
+        color: var(--bad);
+        margin: 0 0 12px 0;
+        font-size: 16px;
+      }
+      .danger-zone p {
+        color: var(--muted);
+        font-size: 13px;
+        margin: 0 0 16px 0;
+      }
+      .action-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+      .loading-spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 20px;
+        padding: 8px 16px;
+        background: transparent;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+      .back-btn:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--accent);
+      }
+      /* Collection Card Styles */
+      .collection-preview {
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        border: 1px solid var(--line);
+      }
+      .collection-stats {
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      .collection-count {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--accent);
+        display: block;
+        margin-bottom: 4px;
+      }
+      .collection-label {
+        font-size: 12px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .collection-preview-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-top: 12px;
+        padding: 0;
+        transition: max-height 0.4s ease;
+        position: relative;
+        width: 100%;
+      }
+      .collection-preview-grid.collapsed {
+        max-height: 280px;
+        overflow: hidden;
+      }
+      .collection-preview-grid.collapsed::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: linear-gradient(to bottom, transparent, var(--panel));
+        pointer-events: none;
+        z-index: 1;
+      }
+      .collection-preview-grid.expanded {
+        max-height: none;
+        overflow: visible;
+      }
+      .preview-sticker {
+        aspect-ratio: 1 / 1;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+      .preview-sticker img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: opacity 0.2s;
+        display: block;
+      }
+      .preview-sticker.locked {
+        background: #000000;
+      }
+      .preview-sticker.locked img {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .preview-sticker.locked::after {
+        content: "🔒";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .preview-sticker.unlocked {
+        border-color: var(--accent);
+        box-shadow: 0 0 8px rgba(77, 163, 255, 0.3);
+      }
+      .btn-expand-collapse {
+        width: 100%;
+        margin-top: 12px;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: var(--text);
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-expand-collapse:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--accent);
+      }
+      /* Quick Stats Card Styles */
+      .quick-stats-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .quick-stat-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        transition: all 0.2s;
+      }
+      .quick-stat-row:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: var(--accent);
+        transform: translateX(2px);
+      }
+      .quick-stat-icon {
+        font-size: 24px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+      }
+      .quick-stat-info {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .quick-stat-label {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .quick-stat-value {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      /* Highlight animation */
+      @keyframes highlight {
+        0%,
+        100% {
+          background: linear-gradient(
+            180deg,
+            var(--panel) 0%,
+            var(--panel-2) 100%
+          );
+        }
+        50% {
+          background: linear-gradient(
+            180deg,
+            rgba(58, 68, 255, 0.1) 0%,
+            var(--panel-2) 100%
+          );
+          transform: scale(1.02);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Header is dynamically loaded -->
+    <div id="header-container"></div>
+
+    <main class="account-page">
+      <!-- Page Title -->
+      <h1 style="margin: 0 0 24px 0">⚙️ Account Settings</h1>
+
+      <!-- Account Grid -->
+      <div class="account-grid">
+        <!-- Profile Information -->
+        <div class="account-card">
+          <h2>👤 Profile Information</h2>
+
+          <div class="info-row">
+            <div class="info-label">Email</div>
+            <div
+              class="info-value"
+              style="display: flex; align-items: center; gap: 8px"
+            >
+              <span id="user-email">Loading...</span>
+              <button
+                class="btn-small btn-secondary"
+                id="change-email-btn"
+                style="margin-left: auto"
+              >
+                Change
+              </button>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Username</div>
+            <div class="editable-field">
+              <input
+                type="text"
+                id="username-input"
+                placeholder="Set your username"
+                maxlength="20"
+              />
+              <button class="btn-small btn-primary-small" id="save-username">
+                Save
+              </button>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Member Since</div>
+            <div class="info-value" id="member-since">Loading...</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Total XP</div>
+            <div class="info-value" id="total-xp">0</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Current Streak</div>
+            <div class="info-value"><span id="current-streak">0</span> 🔥</div>
+          </div>
+        </div>
+
+        <!-- Game Statistics -->
+        <div class="account-card">
+          <h2>📊 Game Statistics</h2>
+
+          <div class="stat-grid">
+            <div class="stat-item">
+              <span class="stat-value" id="games-played">0</span>
+              <span class="stat-label">Games Played</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="total-correct">0</span>
+              <span class="stat-label">Correct Answers</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="accuracy">0%</span>
+              <span class="stat-label">Accuracy</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="best-streak">0</span>
+              <span class="stat-label">Best Streak</span>
+            </div>
+          </div>
+
+          <div
+            class="info-row"
+            style="
+              margin-top: 20px;
+              padding-top: 20px;
+              border-top: 1px solid var(--line);
+            "
+          >
+            <div class="info-label">Total Questions</div>
+            <div class="info-value" id="total-questions">0</div>
+          </div>
+        </div>
+
+        <!-- Collection Card -->
+        <div class="account-card">
+          <h2>📦 Your Collection</h2>
+
+          <div class="collection-container">
+            <div class="collection-stats">
+              <span class="collection-count" id="collection-count">0/18</span>
+              <span class="collection-label">Stickers Collected</span>
+            </div>
+            <div class="collection-grid" id="account-collection-grid">
+              <!-- This will be populated by JavaScript -->
+            </div>
+            <button id="toggle-collection" class="btn-expand-collapse">
+              ▼ Show All (18 stickers)
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Stats Card -->
+        <div class="account-card">
+          <h2>📊 Quick Stats</h2>
+
+          <div class="quick-stats-list">
+            <div class="quick-stat-row">
+              <span class="quick-stat-icon">🎯</span>
+              <div class="quick-stat-info">
+                <span class="quick-stat-label">Total XP</span>
+                <span class="quick-stat-value" id="quick-total-xp">0</span>
+              </div>
+            </div>
+
+            <div class="quick-stat-row">
+              <span class="quick-stat-icon">🎮</span>
+              <div class="quick-stat-info">
+                <span class="quick-stat-label">Games Played</span>
+                <span class="quick-stat-value" id="quick-games-played">0</span>
+              </div>
+            </div>
+
+            <div class="quick-stat-row">
+              <span class="quick-stat-icon">🔥</span>
+              <div class="quick-stat-info">
+                <span class="quick-stat-label">Current Streak</span>
+                <span class="quick-stat-value" id="quick-current-streak"
+                  >0 days</span
+                >
+              </div>
+            </div>
+
+            <div class="quick-stat-row">
+              <span class="quick-stat-icon">⭐</span>
+              <div class="quick-stat-info">
+                <span class="quick-stat-label">Best Streak</span>
+                <span class="quick-stat-value" id="quick-best-streak"
+                  >0 days</span
+                >
+              </div>
+            </div>
+
+            <div class="quick-stat-row">
+              <span class="quick-stat-icon">✅</span>
+              <div class="quick-stat-info">
+                <span class="quick-stat-label">Accuracy</span>
+                <span class="quick-stat-value" id="quick-accuracy">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="btn-secondary"
+            id="view-detailed-stats-btn"
+            style="width: 100%; margin-top: 16px"
+          >
+            📈 View Detailed Statistics
+          </button>
+        </div>
+
+        <!-- Account Security -->
+        <div class="account-card full-width">
+          <h2>🔒 Account Security</h2>
+
+          <div class="action-buttons">
+            <button class="btn-small btn-secondary" id="change-password-btn">
+              🔑 Change Password
+            </button>
+            <button class="btn-small btn-danger" id="logout-btn">
+              🚪 Log Out
+            </button>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="danger-zone">
+            <h3>⚠️ Danger Zone</h3>
+            <p>
+              Deleting your account is permanent. All your progress, stats, and
+              data will be lost forever. This action cannot be undone.
+            </p>
+            <button class="btn-small btn-danger" id="delete-account-btn">
+              🗑️ Delete Account
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Change Password Modal -->
+    <div id="password-modal" class="modal hidden">
+      <div class="modal-content" style="max-width: 420px">
+        <div class="modal-head">
+          <h3>🔑 Change Password</h3>
+          <button id="password-close" class="chip">✖</button>
+        </div>
+
+        <p class="muted small">
+          Enter your new password (minimum 6 characters)
+        </p>
+
+        <label class="muted small" for="new-password">New Password</label>
+        <!-- New Password with toggle -->
+        <div style="position: relative">
+          <input
+            id="new-password"
+            type="password"
+            class="input"
+            placeholder="Enter new password"
+            autocomplete="new-password"
+            style="margin-bottom: 12px; padding-right: 40px"
+          />
+          <button
+            type="button"
+            id="toggle-new-password"
+            style="
+              position: absolute;
+              right: 10px;
+              top: 10px;
+              background: none;
+              border: none;
+              cursor: pointer;
+              font-size: 18px;
+            "
+          >
+            👁️
+          </button>
+        </div>
+
+        <label class="muted small" for="confirm-new-password"
+          >Confirm New Password</label
+        >
+        <!-- Confirm Password with toggle -->
+        <div style="position: relative">
+          <input
+            id="confirm-new-password"
+            type="password"
+            class="input"
+            placeholder="Re-enter new password"
+            autocomplete="new-password"
+            style="padding-right: 40px"
+          />
+          <button
+            type="button"
+            id="toggle-confirm-password"
+            style="
+              position: absolute;
+              right: 10px;
+              top: 10px;
+              background: none;
+              border: none;
+              cursor: pointer;
+              font-size: 18px;
+            "
+          >
+            👁️
+          </button>
+        </div>
+
+        <!-- Password match indicator -->
+        <div
+          id="password-match-indicator"
+          class="hidden"
+          style="margin-top: 8px; font-size: 13px"
+        ></div>
+
+        <div
+          id="password-error"
+          class="error-msg hidden"
+          style="margin-top: 12px"
+        ></div>
+
+        <div class="row" style="margin-top: 20px">
+          <button id="save-password" class="btn btn-primary">
+            Save Password
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div id="delete-modal" class="modal hidden">
+      <div class="modal-content" style="max-width: 480px">
+        <div class="modal-head">
+          <h3 style="color: var(--bad)">⚠️ Delete Account</h3>
+          <button id="delete-close" class="chip">✖</button>
+        </div>
+
+        <p style="margin: 16px 0">
+          <strong>This action is permanent and cannot be undone.</strong>
+        </p>
+
+        <p class="muted small" style="margin-bottom: 16px">
+          All your data including:
+        </p>
+        <ul class="muted small" style="margin: 0 0 20px 20px; line-height: 1.6">
+          <li>All XP and points</li>
+          <li>Game statistics and streaks</li>
+          <li>Username and profile data</li>
+          <li>Collection and achievements</li>
+        </ul>
+        <p class="muted small" style="margin-bottom: 20px">
+          will be <strong>permanently deleted</strong>.
+        </p>
+
+        <label class="muted small" for="delete-confirm"
+          >Type <strong>DELETE</strong> to confirm</label
+        >
+        <input
+          id="delete-confirm"
+          type="text"
+          class="input"
+          placeholder="Type DELETE"
+          autocomplete="off"
+          style="margin-bottom: 12px"
+        />
+
+        <div
+          id="delete-error"
+          class="error-msg hidden"
+          style="margin-top: 12px"
+        ></div>
+
+        <div class="row" style="margin-top: 20px; gap: 12px">
+          <button id="cancel-delete" class="btn btn-secondary" style="flex: 1">
+            Cancel
+          </button>
+          <button id="confirm-delete" class="btn btn-danger" style="flex: 1">
+            Delete Account
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Sticker collection modal ===== -->
+    <div
+      id="collection-modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="collection-title"
+    >
+      <div class="modal-content">
+        <div class="modal-head">
+          <h3 id="collection-title">🖼️ Sticker Collection</h3>
+          <button id="close-collection" class="chip" aria-label="Close">
+            ✖
+          </button>
+        </div>
+        <div id="collection-grid" class="bag-grid">
+          <!-- JS fills with .bag-slot items -->
+        </div>
+        <p class="muted small" style="margin-top: 8px">
+          Grey slots are locked. Get a perfect day to unlock a random sticker.
+        </p>
+      </div>
+    </div>
+
+    <!-- ===== Email Change Modal ===== -->
+    <div id="email-modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-content" style="max-width: 480px">
+        <div class="modal-head">
+          <h3>✉️ Change Email Address</h3>
+          <button id="close-email-modal" class="chip" aria-label="Close">
+            ✖
+          </button>
+        </div>
+
+        <div style="margin-top: 16px">
+          <label
+            class="info-label"
+            for="new-email"
+            style="display: block; margin-bottom: 8px"
+          >
+            New Email Address
+          </label>
+          <input
+            type="email"
+            id="new-email"
+            class="input"
+            placeholder="new@email.com"
+            autocomplete="email"
+            style="width: 100%; margin-bottom: 16px"
+          />
+
+          <label
+            class="info-label"
+            for="email-password"
+            style="display: block; margin-bottom: 8px"
+          >
+            Current Password
+            <span style="color: var(--muted); font-size: 12px"
+              >(required for security)</span
+            >
+          </label>
+          <input
+            type="password"
+            id="email-password"
+            class="input"
+            placeholder="Enter your current password"
+            autocomplete="current-password"
+            style="width: 100%"
+          />
+
+          <div
+            id="email-error"
+            class="error-msg hidden"
+            style="margin-top: 12px"
+          ></div>
+
+          <div class="action-buttons" style="margin-top: 20px">
+            <button
+              id="cancel-email-change"
+              class="btn btn-secondary"
+              style="flex: 1"
+            >
+              Cancel
+            </button>
+            <button id="save-email" class="btn btn-primary" style="flex: 1">
+              Update Email
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Firebase & Account Script -->
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module">
+      // Initialize header for account page
+      import { setupHeader } from "./header-component.js";
+
+      // Wait for DOM to be ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => {
+          setupHeader("account", "", "header-container");
+        });
+      } else {
+        setupHeader("account", "", "header-container");
+      }
+    </script>
+    <script type="module" src="account.js"></script>
+  </body>
+</html>

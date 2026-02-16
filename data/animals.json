@@ -1,0 +1,112 @@
+[
+  {
+    "q": "What is the fastest land animal?",
+    "options": ["Cheetah", "Leopard", "Lion", "Horse"],
+    "answer": "Cheetah"
+  },
+  {
+    "q": "Which mammal can fly?",
+    "options": ["Bat", "Flying squirrel", "Owl", "Eagle"],
+    "answer": "Bat"
+  },
+  {
+    "q": "What is the largest mammal in the world?",
+    "options": ["Blue Whale", "Elephant", "Hippopotamus", "Giraffe"],
+    "answer": "Blue Whale"
+  },
+  {
+    "q": "What is a group of lions called?",
+    "options": ["Pride", "Pack", "Herd", "Troop"],
+    "answer": "Pride"
+  },
+  {
+    "q": "Which animal is known as the 'Ship of the Desert'?",
+    "options": ["Camel", "Horse", "Donkey", "Elephant"],
+    "answer": "Camel"
+  },
+  {
+    "q": "How many legs does a spider have?",
+    "options": ["8", "6", "10", "12"],
+    "answer": "8"
+  },
+  {
+    "q": "What is the only continent without native reptiles or snakes?",
+    "options": ["Antarctica", "Europe", "Asia", "South America"],
+    "answer": "Antarctica"
+  },
+  {
+    "q": "Which bird is known for its colorful tail feathers and dance?",
+    "options": ["Peacock", "Flamingo", "Parrot", "Toucan"],
+    "answer": "Peacock"
+  },
+  {
+    "q": "What is the tallest land animal?",
+    "options": ["Giraffe", "Elephant", "Ostrich", "Kangaroo"],
+    "answer": "Giraffe"
+  },
+  {
+    "q": "Which animal is known for playing dead as a defense mechanism?",
+    "options": ["Opossum", "Snake", "Frog", "Chameleon"],
+    "answer": "Opossum"
+  },
+  {
+    "q": "Which marine animal has eight arms?",
+    "options": ["Octopus", "Squid", "Cuttlefish", "Starfish"],
+    "answer": "Octopus"
+  },
+  {
+    "q": "Which animal is the main source of wool?",
+    "options": ["Sheep", "Alpaca", "Goat", "Rabbit"],
+    "answer": "Sheep"
+  },
+  {
+    "q": "Which bird is a universal symbol of peace?",
+    "options": ["Dove", "Eagle", "Swan", "Robin"],
+    "answer": "Dove"
+  },
+  {
+    "q": "Which animal is known as the King of the Jungle?",
+    "options": ["Lion", "Tiger", "Elephant", "Gorilla"],
+    "answer": "Lion"
+  },
+  {
+    "q": "What is the only marsupial native to North America?",
+    "options": ["Opossum", "Kangaroo", "Wallaby", "Koala"],
+    "answer": "Opossum"
+  },
+  {
+    "q": "What animal is the symbol of the World Wide Fund for Nature (WWF)?",
+    "options": ["Giant Panda", "Elephant", "Tiger", "Dolphin"],
+    "answer": "Giant Panda"
+  },
+  {
+    "q": "Which animal has the longest lifespan?",
+    "options": [
+      "Greenland Shark",
+      "Galápagos Tortoise",
+      "Elephant",
+      "Bowhead Whale"
+    ],
+    "answer": "Greenland Shark"
+  },
+  {
+    "q": "Which bird can mimic human speech?",
+    "options": ["Parrot", "Crow", "Magpie", "Starling"],
+    "answer": "Parrot"
+  },
+  {
+    "q": "What is the largest species of shark?",
+    "options": [
+      "Whale Shark",
+      "Great White Shark",
+      "Tiger Shark",
+      "Hammerhead Shark"
+    ],
+    "answer": "Whale Shark"
+  },
+  {
+    "q": "Which mammal lays eggs?",
+    "options": ["Platypus", "Dolphin", "Kangaroo", "Bat"],
+    "answer": "Platypus"
+  }
+]

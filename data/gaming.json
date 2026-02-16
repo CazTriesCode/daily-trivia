@@ -1,0 +1,127 @@
+[
+  {
+    "q": "In which game do players compete in a battle royale on an island called Erangel?",
+    "options": ["PUBG", "Fortnite", "Apex Legends", "Call of Duty: Warzone"],
+    "answer": "PUBG"
+  },
+  {
+    "q": "What is the name of Mario’s brother?",
+    "options": ["Luigi", "Yoshi", "Toad", "Wario"],
+    "answer": "Luigi"
+  },
+  {
+    "q": "Which company created the PlayStation console?",
+    "options": ["Sony", "Nintendo", "Microsoft", "Sega"],
+    "answer": "Sony"
+  },
+  {
+    "q": "In 'The Legend of Zelda', what is the name of the main protagonist?",
+    "options": ["Link", "Zelda", "Ganondorf", "Epona"],
+    "answer": "Link"
+  },
+  {
+    "q": "What color are the four ghosts in the original 'Pac-Man' game?",
+    "options": [
+      "Red, Pink, Blue, Orange",
+      "Red, Green, Yellow, Blue",
+      "Pink, Yellow, White, Black",
+      "Blue, Green, Red, Purple"
+    ],
+    "answer": "Red, Pink, Blue, Orange"
+  },
+  {
+    "q": "Which 2013 game developed by Naughty Dog follows Joel and Ellie?",
+    "options": [
+      "The Last of Us",
+      "Uncharted 4",
+      "Until Dawn",
+      "Detroit: Become Human"
+    ],
+    "answer": "The Last of Us"
+  },
+  {
+    "q": "What is the highest-selling video game of all time?",
+    "options": ["Minecraft", "Tetris", "GTA V", "Wii Sports"],
+    "answer": "Minecraft"
+  },
+  {
+    "q": "In which game do players build and mine in a blocky 3D world?",
+    "options": ["Minecraft", "Roblox", "Terraria", "Fortnite"],
+    "answer": "Minecraft"
+  },
+  {
+    "q": "Who is the main antagonist in the 'Halo' series?",
+    "options": ["The Covenant", "The Flood", "The Banished", "The Arbiter"],
+    "answer": "The Covenant"
+  },
+  {
+    "q": "Which game popularized the phrase 'The cake is a lie'?",
+    "options": ["Portal", "Half-Life 2", "Bioshock", "Undertale"],
+    "answer": "Portal"
+  },
+  {
+    "q": "In Pokémon, what is the first evolution of Pikachu?",
+    "options": ["Pichu", "Raichu", "Charmander", "Eevee"],
+    "answer": "Pichu"
+  },
+  {
+    "q": "What year was the original 'Super Mario Bros.' released?",
+    "options": ["1985", "1989", "1983", "1990"],
+    "answer": "1985"
+  },
+  {
+    "q": "Which franchise features characters like Cloud Strife and Sephiroth?",
+    "options": ["Final Fantasy", "Kingdom Hearts", "Dragon Quest", "Persona"],
+    "answer": "Final Fantasy"
+  },
+  {
+    "q": "In 'Among Us', what role is responsible for sabotaging and eliminating crewmates?",
+    "options": ["Impostor", "Crewmate", "Engineer", "Captain"],
+    "answer": "Impostor"
+  },
+  {
+    "q": "What is the best-selling Nintendo console of all time?",
+    "options": ["Nintendo DS", "Nintendo Switch", "Wii", "Game Boy"],
+    "answer": "Nintendo DS"
+  },
+  {
+    "q": "Which open-world game series is set in cities like Liberty City and Los Santos?",
+    "options": [
+      "Grand Theft Auto",
+      "Saints Row",
+      "Sleeping Dogs",
+      "Watch Dogs"
+    ],
+    "answer": "Grand Theft Auto"
+  },
+  {
+    "q": "What is the subtitle of 'The Legend of Zelda: Breath of the Wild' sequel released in 2023?",
+    "options": [
+      "Tears of the Kingdom",
+      "Echoes of Time",
+      "Phantom Hourglass",
+      "Twilight Princess"
+    ],
+    "answer": "Tears of the Kingdom"
+  },
+  {
+    "q": "Which horror game features animatronic characters in a pizzeria?",
+    "options": [
+      "Five Nights at Freddy’s",
+      "Silent Hill",
+      "Dead by Daylight",
+      "Outlast"
+    ],
+    "answer": "Five Nights at Freddy’s"
+  },
+  {
+    "q": "In 'Overwatch', which hero is a British time-jumping adventurer?",
+    "options": ["Tracer", "Mercy", "D.Va", "Sombra"],
+    "answer": "Tracer"
+  },
+  {
+    "q": "What company created the Xbox console?",
+    "options": ["Microsoft", "Sony", "Nintendo", "Atari"],
+    "answer": "Microsoft"
+  }
+]
